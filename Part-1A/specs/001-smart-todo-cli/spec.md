@@ -8,6 +8,16 @@
 
 **Input**: User description: "Build Smart Todo CLI, a Node.js command-line task manager with JSON-file persistence and deterministic dependencies."
 
+## Clarifications
+
+### Session 2026-11-01
+
+- Q: Should tag storage and list filters trim tags, match case-insensitively after lowercasing, and require every repeated `--tag` to match? → A: Trim and lowercase tags and filters; exact whole-tag matching; repeated filters use AND.
+- Q: What format and uniqueness rule should apply to IDs returned by the injected ID generator? → A: Any nonempty string; unique among stored tasks; reject collisions with exit code 1 and leave storage unchanged.
+- Q: What should `update` do when no update fields are supplied? → A: Reject it with exit code 1, no stdout, and `error: no update fields provided\n`; do not change storage.
+- Q: After trimming a title, should internal whitespace be preserved exactly or collapsed? → A: Trim leading and trailing whitespace only; preserve internal whitespace exactly.
+- Q: What read-command contract should apply when a list request combines tag filters and priority sorting? → A: `list` returns a compact JSON array, `get` returns one compact task object, and the CLI applies all tag filters first, then sorts the matching tasks.
+
 ## User Scenarios & Testing
 
 ### User Story 1 - Create and manage tasks (Priority: P1)
@@ -96,6 +106,7 @@ and unreadable storage states, then inspect exact exit codes and file contents.
   MUST be an optional string.
 - **FR-003**: The CLI MUST trim titles supplied to add or update and accept
   only titles whose trimmed length is between 1 and 100 characters inclusive.
+  It MUST preserve internal whitespace exactly.
 - **FR-004**: A newly added task MUST default to priority `medium`, tags `[]`,
   and status `todo`; omitted description MUST be absent from the returned and
   persisted task object.
@@ -105,7 +116,8 @@ and unreadable storage states, then inspect exact exit codes and file contents.
 - **FR-006**: Tags supplied to add or update MUST be nonempty after trimming,
   normalized to lowercase, and unique while preserving first occurrence
   order. Empty tags MUST fail validation with exit code 1 and message
-  `tag must not be empty`. List tag filters MUST use the same normalization.
+  `tag must not be empty`. List tag filters MUST be trimmed and lowercased
+  before exact whole-tag matching.
 - **FR-007**: Updating a task MUST support title, description, priority, and
   tags. Omitted update fields MUST remain unchanged; supplied tags replace the
   prior tag array.
@@ -117,8 +129,8 @@ and unreadable storage states, then inspect exact exit codes and file contents.
   attempts from `todo` or `in_progress` MUST fail with exit code 1 and message
   `invalid status transition: <from> -> todo`.
 - **FR-010**: List without sort MUST return tasks in creation order. Repeated
-  tag filters MUST combine with AND; a tag filter with no matches MUST return
-  an empty array.
+  normalized tag filters MUST combine with AND; a tag filter with no matches
+  MUST return an empty array.
 - **FR-011**: `list --sort priority` MUST order tasks by priority `high`,
   `medium`, `low`, then `createdAt` ascending, then `id` ascending.
 - **FR-012**: The CLI MUST persist tasks in one JSON file. A missing file MUST
@@ -139,6 +151,17 @@ and unreadable storage states, then inspect exact exit codes and file contents.
   interfaces other than the command line are out of scope.
 - **FR-018**: A status value outside `todo`, `in_progress`, and `done` MUST
   fail validation with exit code 1 and message `invalid status: <value>`.
+- **FR-019**: IDs returned by the injected generator MUST be nonempty strings
+  unique among stored tasks. An empty ID MUST fail with exit code 1 and
+  message `invalid task id`; a duplicate ID MUST fail with exit code 1 and
+  message `duplicate task id: <id>`. Neither failure may change storage.
+- **FR-020**: An update with no supplied fields MUST fail with exit code 1,
+  message `no update fields provided`, emit no stdout, and leave storage
+  unchanged.
+- **FR-021**: `get` MUST print one compact task object and `list` MUST print a
+  compact JSON array, each followed by exactly one newline. When tag filters
+  and priority sorting are combined, the CLI MUST first select tasks matching
+  every normalized tag, then sort only those matches.
 
 ### Key Entities
 
@@ -160,6 +183,8 @@ The following exact task fixtures are used where referenced:
 - **T1**: `{"id":"task-001","title":"Read book","priority":"medium","tags":["work"],"status":"todo","createdAt":"2026-11-01T10:00:00.000Z"}`
 - **T2**: `{"id":"task-002","title":"Buy milk","priority":"low","tags":["home"],"status":"todo","createdAt":"2026-11-01T10:01:00.000Z"}`
 - **T3**: `{"id":"task-both","title":"Plan","priority":"medium","tags":["work","home"],"status":"todo","createdAt":"2026-11-01T10:02:00.000Z"}`
+- **T4**: `{"id":"task-workshop","title":"Workshop","priority":"medium","tags":["workshop"],"status":"todo","createdAt":"2026-11-01T10:03:00.000Z"}`
+- **T5**: `{"id":"task-high-both","title":"Urgent plan","priority":"high","tags":["work","home"],"status":"todo","createdAt":"2026-11-01T10:04:00.000Z"}`
 
 - **AC-001**: **Given** a missing storage file, an ID generator returning
   `task-001`, and a fake clock returning
@@ -299,12 +324,39 @@ The following exact task fixtures are used where referenced:
 - **AC-038**: **Given** an empty task file, **When** the user adds a task with
   an empty tag, **Then** the exit code is `1`, stdout is empty, stderr is
   exactly `error: tag must not be empty\n`, and the file remains unchanged.
+- **AC-039**: **Given** T1 and T4, **When** the user lists with tag value
+  `" Work "`, **Then** the exit code is `0`, stderr is empty, and stdout is
+  exactly
+  `[{"id":"task-001","title":"Read book","priority":"medium","tags":["work"],"status":"todo","createdAt":"2026-11-01T10:00:00.000Z"}]\n`.
+- **AC-040**: **Given** T1 is stored and the injected ID generator returns
+  `task-001` for a new task, **When** the user adds title `Another`, **Then**
+  the exit code is `1`, stdout is empty, stderr is exactly
+  `error: duplicate task id: task-001\n`, and the stored file remains exactly
+  T1.
+- **AC-041**: **Given** an empty task file and an injected ID generator
+  returning an empty string, **When** the user adds title `Another`, **Then**
+  the exit code is `1`, stdout is empty, stderr is exactly
+  `error: invalid task id\n`, and the file remains unchanged.
+- **AC-042**: **Given** T1 is stored, **When** the user updates `task-001`
+  without supplying any fields, **Then** the exit code is `1`, stdout is empty,
+  stderr is exactly `error: no update fields provided\n`, and the stored file
+  remains exactly T1.
+- **AC-043**: **Given** an empty task file, an ID generator returning
+  `task-002`, and a fake clock returning
+  `2026-11-01T10:01:00.000Z`, **When** the user adds title
+  `"  Read   book  "`, **Then** the exit code is `0`, stderr is empty, and
+  stdout is exactly
+  `{"id":"task-002","title":"Read   book","priority":"medium","tags":[],"status":"todo","createdAt":"2026-11-01T10:01:00.000Z"}\n`.
+- **AC-044**: **Given** T1, T2, T3, and T5 in that creation order, **When**
+  the user lists with repeated tags `work` and `home` and priority sorting,
+  **Then** the exit code is `0`, stderr is empty, and stdout is exactly
+  `[{"id":"task-high-both","title":"Urgent plan","priority":"high","tags":["work","home"],"status":"todo","createdAt":"2026-11-01T10:04:00.000Z"},{"id":"task-both","title":"Plan","priority":"medium","tags":["work","home"],"status":"todo","createdAt":"2026-11-01T10:02:00.000Z"}]\n`.
 
 ## Success Criteria
 
 ### Measurable Outcomes
 
-- **SC-001**: 100 percent of the acceptance criteria AC-001 through AC-038
+- **SC-001**: 100 percent of the acceptance criteria AC-001 through AC-044
   pass with exact exit-code, stdout, stderr, and persisted-file assertions.
 - **SC-002**: Repeating any acceptance test with the same initial JSON file and
   injected dependencies produces byte-for-byte identical stdout, stderr, and
@@ -319,20 +371,30 @@ The following exact task fixtures are used where referenced:
 - Add and update accept repeated `--tag` options. Update replaces the tags only
   when at least one `--tag` option is supplied; omitted fields remain
   unchanged. `--description ""` clears a description.
+- Stored tags and filters are trimmed and lowercased; matching is exact per
+  whole tag, and repeated filters use AND semantics.
+- List filtering is applied before sorting; `list` emits an array and `get`
+  emits one task object, each as compact JSON followed by one newline.
 - Successful output is compact JSON followed by exactly one newline. Add,
   get, update, status, and reopen print a task object; list prints an array;
   delete prints `{"deleted":true,"id":"<id>"}`.
 - Tasks are stored as a JSON array in creation order. Updating a task does not
   change its creation position. JSON uses UTF-8.
-- Titles are trimmed before storage and length validation. Tags are trimmed,
+- Titles are trimmed at both ends before storage and length validation;
+  internal whitespace is preserved exactly. Tags are trimmed,
   lowercased, and deduplicated after case normalization, preserving the first
   normalized occurrence. Empty tags are invalid.
 - A fake clock returns an ISO-8601 string directly.
+- IDs may be any nonempty string generated by the injected ID generator and
+  must be unique among stored tasks; empty IDs fail with `invalid task id`,
+  while duplicate IDs fail with `duplicate task id: <id>`.
 - Known validation messages are `title must be between 1 and 100 characters`,
   `invalid priority: <value>`, and `task not found: <id>`. All storage read or
   parse errors use `storage error`.
 - The JSON file is loaded at command start and written only after a successful
   mutation. If loading fails, no mutation or write occurs.
+- Update commands MUST include at least one field to change; empty updates are
+  rejected with `no update fields provided`.
 - Authentication, synchronization, recurring tasks, and graphical or web
   interfaces are out of scope.
 
@@ -340,9 +402,8 @@ The following exact task fixtures are used where referenced:
 
 - **CLI syntax**: Confirm the provisional `smart-todo` executable name,
   positional argument order, and option spelling above.
-- **Successful output contract**: Confirm whether the assumed JSON result
-  shapes (task object, task array, and delete result object) and exact newline
-  formatting are the required public contract.
+- **Mutation output contract**: Confirm whether add, update, status, reopen,
+  and delete use the assumed compact JSON shapes and exact newline formatting.
 - **Clock contract**: Confirm whether the injected clock supplies an ISO-8601
   string, or supplies a numeric time that the composition root converts to
   ISO-8601. The constitution forbids `Date` use in `src/`, so the production
@@ -350,6 +411,19 @@ The following exact task fixtures are used where referenced:
 
 ## Change History
 
+- **2026-11-01**: Clarified ID generation: any nonempty generated string is
+  accepted if unique among stored tasks; collisions fail with exit code 1 and
+  leave storage unchanged.
+- **2026-11-01**: Clarified empty updates: they fail with exit code 1 and
+  `no update fields provided`, with no stdout or storage change.
+- **2026-11-01**: Clarified title whitespace: trim leading and trailing
+  whitespace, preserve internal whitespace exactly.
+- **2026-11-01**: Clarified list/get output and combined list options: list
+  returns an array, get returns a task object, and all tag filters apply before
+  priority sorting.
+- **2026-11-01**: Clarified tag normalization and matching: tags and filters
+  are trimmed and lowercased, matches are exact whole-tag matches, and
+  repeated filters use AND semantics.
 - **2026-11-01**: Initial specification created from the user-provided Smart
   Todo CLI requirements. Provisional CLI syntax, output shapes, and clock
   contract are marked for clarification.

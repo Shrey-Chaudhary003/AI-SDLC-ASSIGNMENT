@@ -1,10 +1,10 @@
 <!--
 Sync Impact Report
-Version change: 2.0.0 -> 3.0.0
-Modified principles: Principle VII, Coding-Agent Boundaries, now permits the
-  user-requested /speckit-specify workflow to create its feature spec and path metadata
-Added sections: explicit /speckit-specify artifact exception to Principle VII
-Removed sections: absolute prohibition on creating feature specifications
+Version change: 3.0.0 -> 3.1.0
+Modified principles: Principle VII, Coding-Agent Boundaries, now permits
+  explicitly requested /speckit-clarify updates to the active feature spec
+Added sections: /speckit-clarify exception to Principle VII for spec and dated history updates
+Removed sections: none
 Follow-up TODOs: none
 -->
 
@@ -54,9 +54,12 @@ built-in modules.
 A coding agent MUST make application implementation changes only under
 `src/`. When explicitly invoked by the user, `/speckit-specify` MAY create or
 update the single requested feature's `spec.md` under `specs/<feature>/` and
-the required `.specify/feature.json` path metadata. This exception MUST NOT
-authorize changes to other files under `specs/`. A coding agent MUST NOT
-create, edit, rename, or delete files in `tests/`, `.harness/`,
+the required `.specify/feature.json` path metadata. When explicitly invoked by
+the user, `/speckit-clarify` MAY update the active feature's `spec.md` by
+recording answers in its `Clarifications` section and dated `Change History`.
+These exceptions MUST NOT authorize changes to other files under `specs/`. A
+coding agent MUST NOT create, edit, rename, or delete files in `tests/`,
+`.harness/`,
 `.specify/memory/constitution.md`, `eslint.config.js`, or
 `eslint.security.config.js`, except an explicit user-requested constitution
 amendment. It MUST NOT add suppression comments such as `eslint-disable`,
@@ -99,4 +102,4 @@ non-semantic edits. Reviews MUST verify compliance with every applicable
 principle. A human MUST record the final ACCEPT or REJECT decision and known
 limitations after a harness PASS.
 
-**Version**: 3.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 3.1.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
