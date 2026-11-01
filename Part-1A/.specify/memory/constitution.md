@@ -1,9 +1,10 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 -> 2.0.0
-Modified principles: all five rate-limiter principles replaced with nine Smart Todo CLI principles
-Added sections: none
-Removed sections: rate-limiter-specific requirements
+Version change: 2.0.0 -> 3.0.0
+Modified principles: Principle VII, Coding-Agent Boundaries, now permits the
+  user-requested /speckit-specify workflow to create its feature spec and path metadata
+Added sections: explicit /speckit-specify artifact exception to Principle VII
+Removed sections: absolute prohibition on creating feature specifications
 Follow-up TODOs: none
 -->
 
@@ -50,12 +51,16 @@ have no runtime dependencies; all runtime capabilities MUST use Node.js
 built-in modules.
 
 ### VII. Coding-Agent Boundaries
-A coding agent MUST create or change files only under `src/`. It MUST NOT
-create, edit, rename, or delete files in `tests/`, `specs/`, `.harness/`,
+A coding agent MUST make application implementation changes only under
+`src/`. When explicitly invoked by the user, `/speckit-specify` MAY create or
+update the single requested feature's `spec.md` under `specs/<feature>/` and
+the required `.specify/feature.json` path metadata. This exception MUST NOT
+authorize changes to other files under `specs/`. A coding agent MUST NOT
+create, edit, rename, or delete files in `tests/`, `.harness/`,
 `.specify/memory/constitution.md`, `eslint.config.js`, or
-`eslint.security.config.js`. It MUST NOT add suppression comments such as
-`eslint-disable`, `c8 ignore`, or `nosec`, skip or weaken tests, or lower a
-quality threshold.
+`eslint.security.config.js`, except an explicit user-requested constitution
+amendment. It MUST NOT add suppression comments such as `eslint-disable`,
+`c8 ignore`, or `nosec`, skip or weaken a test, or lower a quality threshold.
 
 ### VIII. Implementation Evidence and Repairs
 The first generated implementation MUST be preserved before any repair. No
@@ -94,4 +99,4 @@ non-semantic edits. Reviews MUST verify compliance with every applicable
 principle. A human MUST record the final ACCEPT or REJECT decision and known
 limitations after a harness PASS.
 
-**Version**: 2.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 3.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
