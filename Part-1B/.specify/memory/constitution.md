@@ -17,7 +17,7 @@
 - **AC-002** Declare the evaluation threshold and scoring formula in the specification before the final evaluation. Do not lower, weaken, or redefine them after that evaluation begins.
 
 ### IV. Controlled Implementation and Immutable Guardrails
-- **GR-001** A coding agent may create or change files only under `src/` and `prompts/`.
+- **GR-001** A coding agent may create or change implementation files only under `src/` and `prompts/`, test files only under `tests/`, and may make only the explicitly authorized `npm start` script addition in `package.json`; it must not add dependencies or make other package-manifest changes.
 - **GR-002** A coding agent must never create, edit, rename, or delete files in `evals/`, `specs/`, `.harness/`, or `.specify/memory/constitution.md`.
 - **GR-003** A coding agent must not remove or weaken a guardrail, special-case dataset inputs, change expected results, or change the evaluation threshold.
 - **GR-004** Changes outside the permitted implementation paths require the authorized human/specification process; they are not implementation shortcuts.
@@ -60,5 +60,7 @@ This constitution governs implementation and evaluation. The authoritative proje
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-01 | 1.0.0 | Initial ratification for Reminder Agent. |
+| 2026-11-01 | 1.0.1 | By explicit human approval, authorized coding-agent test files under `tests/`; implementation remains limited to `src/` and `prompts/`, and all protected paths and other guardrails remain unchanged. |
+| 2026-11-01 | 1.0.2 | By explicit human approval, authorized only the `npm start` script addition in `package.json` required by AP-001; no dependencies or other manifest edits are permitted. |
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 1.0.2 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01

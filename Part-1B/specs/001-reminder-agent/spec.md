@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: Build a Node.js module that turns a free-text reminder request into one structured JSON object using an LLM selected by `LLM_PROVIDER` (`gemini` or `openai`), with a small backend API and browser frontend for trying the agent and seeing each step.
+**Input**: User description: Build a Node.js module that turns a free-text reminder request into one structured JSON object using the Gemini API, with a small backend API and browser frontend for trying the agent and seeing each step.
 
 ## User Scenarios & Testing
 
@@ -38,17 +38,17 @@ A person opens the local browser frontend, edits the request and reference-time 
 2. **Given** a parse request succeeds, **When** its result is displayed, **Then** the person can inspect the intent, all output fields, raw JSON, checks, provider, model, latency, and recent requests.
 3. **Given** the backend returns a service or invalid-model-JSON error, **When** the response is displayed, **Then** the page shows a clear error message rather than a blank result.
 
-### User Story 3 - Integrate a provider without changing the contract (Priority: P3)
+### User Story 3 - Use Gemini without changing the contract (Priority: P3)
 
-The application selects Gemini or OpenAI using `LLM_PROVIDER`, while the caller receives the same seven-field output contract regardless of provider.
+The application uses Gemini while the caller receives the same seven-field output contract.
 
-**Why this priority**: Provider selection supports model use while preserving stable behavior for the module, API, and evaluation harness.
+**Why this priority**: A stable Gemini integration preserves predictable behavior for the module, API, and evaluation harness.
 
-**Independent Test**: Configure each supported provider in turn, call the module directly, and verify output shape and classified service errors without exposing credentials.
+**Independent Test**: Configure Gemini with a model and API key, call the module directly using a fake fetch in tests, and verify output shape and classified service errors without exposing credentials or making real API calls.
 
 **Acceptance Scenarios**:
 
-1. **Given** `LLM_PROVIDER` selects a supported provider and its API key is configured, **When** the module is called, **Then** it uses that provider and returns only the defined result object.
+1. **Given** the Gemini model and API key are configured, **When** the module is called, **Then** it uses Gemini and returns only the defined result object.
 2. **Given** a model or network service failure occurs, **When** the call completes, **Then** the failure is reported separately as a service error and is not represented as a successful reminder result.
 
 ### Edge Cases
@@ -115,13 +115,13 @@ The output object has exactly these seven properties and no others:
 
 This layer is **not part of the evaluation**. The evaluation harness calls `parseReminder(text, nowIso, timezone)` in `src/agent.js` directly. The delivery layer only wraps it and must never change the Output Schema Contract.
 
-Use only Node.js built-in modules (`node:http`) and global `fetch`; no npm packages, CDN, or frontend framework. The Node.js application uses CommonJS. Select the model provider using `LLM_PROVIDER` with supported values `gemini` and `openai`.
+Use only Node.js built-in modules (`node:http`) and global `fetch`; no npm packages, CDN, or frontend framework. The Node.js application uses CommonJS and Gemini as its only model provider.
 
 ### API Requirements
 
 - **AP-001 Backend**: `src/server.js` starts an HTTP server on `127.0.0.1`, port from the `PORT` environment variable (default 3000), started with "npm start". It serves the frontend at GET / and exposes GET /api/health returning `{"status":"ok","provider":<name>,"model":<name>}` (never the API key).
 - **AP-002 Parse endpoint**: POST /api/parse accepts a JSON body {text, nowIso?, timezone?}. If nowIso is omitted the SERVER supplies the current time with its UTC offset (this is the only place the system clock is read; parseReminder itself never reads the clock). The response is `{"result": <the seven-field object>, "meta": {"provider","model","latencyMs","nowIso","timezone"}, "checks": [{"id","name","pass"}]}` where checks reports the structural and invariant checks (for example SI-002 fields present, SI-004 real date, SI-005 future datetime, GR-004 horizon) computed on the result.
-- **AP-003 Error mapping**: invalid request body or body larger than 10 KB -> HTTP 400; model reply that is not valid JSON (code INVALID_MODEL_JSON) -> HTTP 502 with `{"error":{"code","message","raw"}}`; service errors (code SERVICE_ERROR: 429, 5xx, timeout, network) -> HTTP 503 with `{"error":{"code","message"}}`. Responses never contain the API key or the system prompt.
+- **AP-003 Error mapping**: invalid request body or body larger than 10 KB -> HTTP 400; model reply that is not valid JSON (code INVALID_MODEL_JSON), or parsed model JSON that fails schema/invariant validation (code INVALID_MODEL_OUTPUT) -> HTTP 502 with `{"error":{"code","message","raw"}}`; provider HTTP 4xx other than 429 (code PROVIDER_ERROR) -> HTTP 502 with `{"error":{"code","message"}}` and no provider response body; service errors (code SERVICE_ERROR: 429, 5xx, timeout, network) -> HTTP 503 with `{"error":{"code","message"}}`. API error `raw` is redacted if it contains system-prompt/internal-instruction content or a configured secret; the original is retained only in private error evidence. Responses never contain the API key or the system prompt.
 - **AP-004 Frontend**: one static page `src/public/index.html` (inline CSS and JavaScript) with fields for text, reference time (default: now in the browser, shown with its UTC offset) and timezone (default Asia/Kolkata), a "Parse" button, and example buttons for at least five sample requests (create, reschedule, snooze, clarify, an injection attempt).
 - **AP-005 Frontend result view**: shows the intent as a coloured badge, the title, the datetime in a human-readable form AND the raw ISO string, snooze_minutes, the clarification question when present, the reason, and the full raw JSON in a separate panel. It shows the checks list from AP-002 as pass/fail badges, the provider, model and latency, and the last 10 requests of the session (in memory only). Loading, service-error (503) and invalid-JSON (502) states are shown as clear messages, not as a blank page.
 - **AP-006 Frontend safety**: The frontend never stores or displays the API key, and escapes all model output before inserting it into the page (no innerHTML with model text).
@@ -142,7 +142,7 @@ Use only Node.js built-in modules (`node:http`) and global `fetch`; no npm packa
 - **AC-012 (GR-006)**: **Given** a request whose reminder time is in the past, **When** it is parsed, **Then** the result is clarify or reject with `datetime: null`.
 - **AC-013 (AP-001)**: **Given** a configured `PORT` or no `PORT`, **When** the operator runs `npm start`, **Then** the server binds only to `127.0.0.1` on that port or port 3000 respectively, serves `GET /`, and returns the specified health JSON without an API key from `GET /api/health`.
 - **AC-014 (AP-002)**: **Given** a valid parse body with or without `nowIso`, **When** `POST /api/parse` is called, **Then** the response contains the seven-field result, required metadata, and computed structural/invariant checks, and an omitted `nowIso` is supplied by the server rather than `parseReminder`.
-- **AC-015 (AP-003)**: **Given** malformed/oversized input, invalid model JSON, or a service error, **When** the API handles the request, **Then** it returns the specified 400, 502, or 503 status and error shape respectively, without exposing the API key or system prompt.
+- **AC-015 (AP-003)**: **Given** malformed/oversized input, invalid model JSON, parsed model JSON that fails schema/invariant validation, a provider HTTP 4xx response other than 429, or a service error, **When** the API handles the request, **Then** it returns the specified 400, 502, or 503 status and error shape respectively, without exposing the API key, system prompt, or provider response body.
 - **AC-016 (AP-004)**: **Given** the frontend is served at `GET /`, **When** a person opens it, **Then** the static page provides the required text, reference-time, and timezone fields, default values, Parse button, and at least five specified example buttons.
 - **AC-017 (AP-005)**: **Given** successful and failing parse responses, **When** the frontend renders them, **Then** it shows all specified result fields, raw JSON, checks, provider/model/latency, at most the last 10 session requests, and clear loading, 503, and 502 states.
 - **AC-018 (AP-006)**: **Given** model output containing HTML or script-like text, **When** the frontend renders it, **Then** it is escaped as text and is never inserted with `innerHTML`; the API key is neither stored nor displayed.
@@ -180,6 +180,10 @@ These decisions resolve behavior and evaluation ambiguities. They do not change 
 8. **Gibberish and injection (GR-001, GR-003)**: Clarify gibberish input. Reject an input consisting solely of an injection attempt with `datetime: null`. If an injection is mixed with a valid reminder, ignore the injected instructions and process only the reminder request.
 9. **Parse API input validation (AP-002, AP-003)**: Limit `text` to 8,000 Unicode code points, in addition to the 10 KB JSON request-body limit; exceeding either limit returns HTTP 400. If `timezone` is omitted, use `Asia/Kolkata`; an invalid IANA timezone or invalid offset-bearing ISO-8601 `nowIso` returns HTTP 400. When `nowIso` is omitted, the server supplies it as specified in AP-002.
 10. **Frontend error display (AP-003, AP-005, AP-006)**: Show distinct, clear messages and safe error codes for HTTP 502 invalid model JSON and HTTP 503 service errors. Do not display raw model text in the frontend. The 502 API response still includes `raw` as required by AP-003; the frontend displays only the safe message/code.
+11. **Parsed but invalid model output (SI-001, SI-003, AP-003)**: If model text parses as JSON but the object violates the output schema or a deterministic specification invariant, `parseReminder` throws an error with code `INVALID_MODEL_OUTPUT` and the original model text in `.raw`. The API returns HTTP 502 with `{"error":{"code":"INVALID_MODEL_OUTPUT","message":...,"raw":...}}`. The output is not repaired, altered, or fabricated.
+12. **Raw error evidence and prompt leakage (GR-002, AP-003, AP-006)**: Preserve the original raw model text only in private error evidence. Before returning a 502 response, redact system-prompt/internal-instruction content and configured secrets from its `raw` field; never render raw model text in the frontend.
+13. **Provider HTTP 4xx errors (AP-003)**: Do not retry provider HTTP 4xx responses other than 429. Throw `PROVIDER_ERROR` and return HTTP 502 with a safe error code/message only; do not include the provider response body or credentials.
+14. **Gemini-only provider scope (AP-001, AP-002)**: Gemini is the only supported model provider. `config.provider` and API provider metadata report `gemini`; there is no provider-selection environment variable or alternate-provider client/credential.
 
 ## Key Entities
 
@@ -190,7 +194,7 @@ These decisions resolve behavior and evaluation ambiguities. They do not change 
 
 ## Assumptions
 
-- Supported provider selection is supplied through `LLM_PROVIDER` and is either `gemini` or `openai`.
+- Gemini is the only supported provider. `GEMINI_API_KEY` and `LLM_MODEL` configure its API call.
 - Provider credentials are available to the backend through approved secret configuration; they are not sent to or exposed by the browser.
 - The API is intended for local use and binds to loopback (`127.0.0.1`), not a public interface.
 - `timezone` defaults to `Asia/Kolkata` when omitted; the reference instant is still supplied explicitly to the agent.
@@ -202,3 +206,7 @@ These decisions resolve behavior and evaluation ambiguities. They do not change 
 |---|---|---|
 | 2026-11-01 | 1.0.0 | Initial specification. Recorded the requested Reminder Agent requirements, schema, delivery layer, evaluation formula and threshold, dataset traceability, and acceptance criteria before evaluation. |
 | 2026-11-01 | 1.0.1 | Recorded ten user-approved clarifications for time interpretation, rescheduling, snooze conversion, mixed and invalid inputs, API validation, and frontend error display. No FR/SI/BP/GR requirement, schema, or evaluation threshold was changed. |
+| 2026-11-01 | 1.0.2 | Clarified that parsed model JSON failing schema or invariant validation throws `INVALID_MODEL_OUTPUT` with raw text and maps to HTTP 502; updated AP-003 and AC-015. No FR/SI/BP/GR requirement, schema, or evaluation threshold was changed. |
+| 2026-11-01 | 1.0.3 | Clarified that raw model text is private evidence and prompt/internal-instruction content and configured secrets are redacted from 502 API responses; updated AP-003. No FR/SI/BP/GR requirement, schema, or evaluation threshold was changed. |
+| 2026-11-01 | 1.0.4 | Clarified that provider HTTP 4xx errors other than 429 are not retried, throw `PROVIDER_ERROR`, and map to HTTP 502 without provider response content; updated AP-003. No FR/SI/BP/GR requirement, schema, or evaluation threshold was changed. |
+| 2026-11-01 | 1.0.5 | By user direction, narrowed the provider scope to Gemini only and removed multi-provider support. The functional requirements, invariants, business policies, guardrails, schema, and evaluation threshold are unchanged. |
