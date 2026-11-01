@@ -1,0 +1,21 @@
+{
+  "label": "dev-final",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "tests",
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-009: update changes supplied fields and normalizes tags :: --- | duration_ms: 13.7104 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:232:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | + actual - expected | + '{\"id\":\"task-001\",\"title\":\"New\",\"description\":\"note\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\"}\\n' | - '{\"id\":\"task-001\",\"title\":\"New\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\",\"description\":\"note\"}\\n' | code: 'ERR_ASSERTION' | name: 'AssertionError'"
+        },
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-048: every contract usage and validation error has its exact response :: --- | duration_ms: 121.1348 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:755:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | 0 !== 1 | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1 | actual: 0"
+        }
+      ]
+    }
+  ]
+}

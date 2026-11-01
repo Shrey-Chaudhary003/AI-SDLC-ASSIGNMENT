@@ -21,7 +21,7 @@ function parseTasks(contents) {
   let tasks;
   try {
     tasks = JSON.parse(contents);
-  } catch (error) {
+  } catch {
     throw storageError();
   }
   return validateStoredCollection(tasks);
@@ -31,7 +31,7 @@ function save(storagePath, tasks) {
   const contents = `${JSON.stringify(tasks)}\n`;
   try {
     fs.writeFileSync(storagePath, contents, 'utf8');
-  } catch (error) {
+  } catch {
     throw storageError();
   }
 }

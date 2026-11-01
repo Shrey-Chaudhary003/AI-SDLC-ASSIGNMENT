@@ -59,7 +59,7 @@ function runEslint({ root, name, configFile, targets, timeoutMs }) {
 module.exports = {
   name: 'lint',
   run(ctx) {
-    return runEslint({ ...ctx, name: 'lint', configFile: 'eslint.config.js', targets: ['src', 'tests'] });
+    return runEslint({ ...ctx, name: 'lint', configFile: 'eslint.config.js', targets: ['src', 'tests', 'web', 'vite.config.js'] });
   },
   runEslint,
 };

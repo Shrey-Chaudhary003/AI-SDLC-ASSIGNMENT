@@ -6,6 +6,6 @@ const { runEslint } = require('./lint');
 module.exports = {
   name: 'security',
   run(ctx) {
-    return runEslint({ ...ctx, name: 'security', configFile: 'eslint.security.config.js', targets: ['src'] });
+    return runEslint({ ...ctx, name: 'security', configFile: 'eslint.security.config.js', targets: ['src', 'web'] });
   },
 };

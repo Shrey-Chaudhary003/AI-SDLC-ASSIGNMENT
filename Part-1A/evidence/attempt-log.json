@@ -1,0 +1,17 @@
+[
+  {
+    "attempt": 1,
+    "label": "initial",
+    "timestamp": "2026-11-01T12:56:16.670Z",
+    "overall": "FAIL",
+    "gitCommit": "a525711",
+    "gates": {
+      "integrity": "PASS",
+      "static": "PASS",
+      "secrets": "PASS",
+      "lint": "FAIL",
+      "security": "FAIL",
+      "tests": "FAIL"
+    }
+  }
+]

@@ -1,0 +1,289 @@
+{
+  "label": "dev-finalfile",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "integrity",
+      "status": "FAIL",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/gates/lint.js",
+          "message": ".harness/gates/lint.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/gates/security.js",
+          "message": ".harness/gates/security.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/gates/static.js",
+          "message": ".harness/gates/static.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/gates/tests.js",
+          "message": ".harness/gates/tests.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/harness-rules.md",
+          "message": ".harness/harness-rules.md differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".harness/run-harness.js",
+          "message": ".harness/run-harness.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": ".specify/memory/constitution.md",
+          "message": ".specify/memory/constitution.md differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": "eslint.config.js",
+          "message": "eslint.config.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": "eslint.security.config.js",
+          "message": "eslint.security.config.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_CHANGED",
+          "file": "tests/cli.test.js",
+          "message": "tests/cli.test.js differs from the locked baseline."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": ".harness/gates/build.js",
+          "message": ".harness/gates/build.js was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "specs/002-smart-todo-web/contracts/api-contract.md",
+          "message": "specs/002-smart-todo-web/contracts/api-contract.md was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "specs/002-smart-todo-web/plan.md",
+          "message": "specs/002-smart-todo-web/plan.md was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "specs/002-smart-todo-web/spec.md",
+          "message": "specs/002-smart-todo-web/spec.md was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "specs/002-smart-todo-web/tasks.md",
+          "message": "specs/002-smart-todo-web/tasks.md was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "tests/api.test.js",
+          "message": "tests/api.test.js was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "tests/web.setup.jsx",
+          "message": "tests/web.setup.jsx was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "tests/web.test.jsx",
+          "message": "tests/web.test.jsx was added after the baseline was locked."
+        }
+      ]
+    },
+    {
+      "gate": "lint",
+      "status": "FAIL",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests web vite.config.js",
+      "findings": [
+        {
+          "code": "no-unused-vars",
+          "file": "tests/web.test.jsx",
+          "line": 1,
+          "message": "'React' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "tests/web.test.jsx",
+          "line": 4,
+          "message": "'App' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 1,
+          "message": "'React' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 44,
+          "message": "'Page' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 55,
+          "message": "'Header' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 66,
+          "message": "'Welcome' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 82,
+          "message": "'Workspace' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 94,
+          "message": "'SectionHeading' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 103,
+          "message": "'TaskFilters' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 120,
+          "message": "'TaskList' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 140,
+          "message": "'EmptyState' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 150,
+          "message": "'TaskCard' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 167,
+          "message": "'TaskTitle' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 175,
+          "message": "'TaskActions' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 187,
+          "message": "'TaskForm' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 201,
+          "message": "'TextField' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/App.jsx",
+          "line": 212,
+          "message": "'FormRow' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/main.jsx",
+          "line": 1,
+          "message": "'React' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "web/main.jsx",
+          "line": 3,
+          "message": "'App' is defined but never used.",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "gate": "security",
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src web",
+      "findings": [
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/api.js",
+          "line": 94,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/api.js",
+          "line": 100,
+          "message": "Function Call Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/api.js",
+          "line": 100,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/api.js",
+          "line": 115,
+          "message": "Function Call Object Injection Sink",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "SKIPPED",
+      "command": "node --test",
+      "findings": [
+        {
+          "code": "SKIPPED_INTEGRITY_FAILED",
+          "message": "Dynamic checks skipped until protected-file findings are resolved (same rule as Lab Sheet 2)."
+        }
+      ]
+    }
+  ]
+}

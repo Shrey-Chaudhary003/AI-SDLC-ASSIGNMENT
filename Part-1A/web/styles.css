@@ -1,0 +1,108 @@
+:root {
+  font-family: 'Segoe UI', sans-serif;
+  color: #23332d;
+  background: #f7f8f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+.app-shell { max-width: 1180px; margin: 0 auto; padding: 0 42px; }
+.topbar { height: 82px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e8ebe4; }
+.brand { color: #25372f; display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 19px; font-weight: 700; letter-spacing: -.8px; }
+.brand-mark { width: 30px; height: 30px; border-radius: 10px 10px 10px 3px; background: #315d4a; color: white; display: grid; place-items: center; font-family: Georgia, serif; font-size: 20px; }
+.local-badge { display: flex; gap: 8px; align-items: center; border: 1px solid #e4e9e1; border-radius: 99px; padding: 8px 13px; font-size: 11px; color: #62726a; background: #fff; }
+.local-badge span { width: 7px; height: 7px; border-radius: 50%; background: #7eac79; }
+.welcome { min-height: 282px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; border-bottom: 1px solid #e8ebe4; }
+.eyebrow { color: #76897e; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; margin: 0 0 12px; }
+.welcome h1 { margin: 0; font: 50px/1.03 Georgia, serif; letter-spacing: -1.6px; color: #23382e; }
+.welcome h1 em { color: #7d9a77; font-weight: 400; }
+.intro { margin: 16px 0 0; color: #7b8880; font-size: 13px; }
+.welcome-art { width: 300px; height: 230px; position: relative; margin-right: 55px; }
+.sun { position: absolute; width: 142px; height: 142px; border-radius: 50%; background: #e7ecdc; top: 43px; left: 87px; }
+.orbit { position: absolute; border: 1px solid #cbd6c5; border-radius: 50%; transform: rotate(-25deg); }
+.orbit-one { width: 250px; height: 84px; top: 76px; left: 30px; }
+.orbit-two { width: 198px; height: 54px; top: 91px; left: 56px; transform: rotate(32deg); }
+.art-leaf { display: block; position: absolute; width: 34px; height: 56px; background: #91ab83; border-radius: 100% 0 100% 0; transform: rotate(27deg); }
+.leaf-one { top: 67px; left: 224px; }
+.leaf-two { top: 122px; left: 44px; transform: rotate(207deg); background: #c3cfb5; }
+.workspace { padding: 38px 0 56px; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 22px; }
+.section-heading h2 { margin: 0; font: 30px Georgia, serif; letter-spacing: -.6px; }
+.task-count { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #e8eee5; color: #57705e; font: 11px 'Segoe UI', sans-serif; vertical-align: middle; margin-left: 5px; }
+.filters { display: flex; align-items: center; gap: 9px; }
+.filters label { position: relative; }
+.filters input, .filters select { height: 38px; border: 1px solid #e5e9e2; border-radius: 8px; background: #fff; color: #46564d; font-size: 11px; outline: none; }
+.filters input { width: 152px; padding: 0 10px 0 30px; }
+.filters select { padding: 0 28px 0 10px; }
+.filters input:focus, .filters select:focus, .task-form input:focus, .task-form textarea:focus, .task-form select:focus { border-color: #8ca78c; box-shadow: 0 0 0 3px #dce8da; }
+.filter-icon { position: absolute; z-index: 1; left: 10px; top: 7px; color: #8b9b8e; font-size: 19px; }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1fr) 315px; gap: 22px; align-items: start; }
+.task-panel { min-height: 268px; border: 1px solid #e8ebe5; border-radius: 13px; background: #fff; padding: 9px 20px; }
+.task-list { list-style: none; padding: 0; margin: 0; }
+.task-card { display: flex; gap: 14px; padding: 19px 0; border-bottom: 1px solid #eef0eb; }
+.task-card:last-child { border-bottom: 0; }
+.task-check { flex: 0 0 19px; width: 19px; height: 19px; margin-top: 2px; border: 1px solid #ced8ce; border-radius: 50%; color: #fff; font-size: 12px; display: grid; place-items: center; }
+.status-done .task-check { background: #6f9574; border-color: #6f9574; }
+.task-main { min-width: 0; flex: 1; }
+.task-title-line { display: flex; align-items: center; gap: 10px; }
+.task-title-line h3 { margin: 0; font-size: 13px; font-weight: 600; }
+.status-done .task-title-line h3 { color: #98a39a; text-decoration: line-through; }
+.priority { border-radius: 99px; padding: 4px 8px; text-transform: capitalize; font-size: 9px; }
+.priority-high { color: #a35b4f; background: #fbefeb; }
+.priority-medium { color: #8a7952; background: #f7f3e7; }
+.priority-low { color: #6b8372; background: #edf4ed; }
+.task-description { color: #839087; font-size: 11px; margin: 7px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.task-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+.tag { padding: 4px 7px; border: 1px solid #edf0e9; border-radius: 5px; color: #728078; font-size: 9px; }
+.status-text { color: #99a39b; font-size: 9px; text-transform: capitalize; margin-left: auto; }
+.task-actions { display: flex; gap: 5px; margin-top: 10px; }
+.task-actions button, .text-button { padding: 0; border: 0; background: transparent; color: #66836c; font-size: 10px; }
+.task-actions button + button { margin-left: 5px; }
+.task-actions button:hover, .text-button:hover { color: #294d37; text-decoration: underline; }
+.task-form { border: 1px solid #e4e9e1; border-radius: 13px; background: #eef2e9; padding: 22px; }
+.task-form h3 { margin: 0 0 20px; font: 23px Georgia, serif; }
+.field-label { display: block; color: #56685d; font-size: 10px; font-weight: 600; margin: 12px 0 7px; }
+.field-label span { color: #9aa49c; font-weight: 400; margin-left: 4px; }
+.task-form input, .task-form textarea, .task-form select { width: 100%; padding: 10px 11px; border: 1px solid #dfe5dc; border-radius: 7px; background: #fff; color: #35483c; font-size: 11px; outline: none; }
+.task-form textarea { resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.primary-button { width: 100%; display: flex; justify-content: space-between; align-items: center; border: 0; border-radius: 7px; margin-top: 18px; padding: 12px 13px; color: white; background: #315d4a; font-size: 11px; font-weight: 600; transition: background .15s ease; }
+.primary-button:hover { background: #244b38; }
+.primary-button span { font-size: 15px; }
+.text-button { margin-top: 12px; }
+.state-message { padding: 30px 12px; color: #829087; text-align: center; font-size: 12px; }
+.error-message { color: #a4483d; }
+.empty-state { min-height: 245px; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 24px; }
+.empty-icon { color: #8faa83; font-size: 29px; }
+.empty-state h3 { margin: 12px 0 6px; font: 20px Georgia, serif; }
+.empty-state p { margin: 0; color: #849087; font-size: 11px; }
+footer { border-top: 1px solid #e8ebe4; padding: 18px 0 24px; display: flex; justify-content: space-between; color: #919b94; font-size: 10px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 800px) {
+  .app-shell { padding: 0 24px; }
+  .content-grid { grid-template-columns: minmax(0, 1fr) 285px; gap: 14px; }
+  .welcome-art { margin-right: 0; transform: scale(.85); transform-origin: right center; }
+}
+
+@media (max-width: 640px) {
+  .app-shell { padding: 0 18px; }
+  .topbar { height: 68px; }
+  .welcome { min-height: 245px; }
+  .welcome h1 { font-size: 42px; }
+  .welcome-art { opacity: .48; position: absolute; right: -85px; top: 12px; transform: scale(.72); }
+  .welcome > div:first-child { position: relative; z-index: 1; }
+  .intro { max-width: 245px; line-height: 1.6; }
+  .workspace { padding-top: 28px; }
+  .section-heading { align-items: start; flex-direction: column; gap: 16px; }
+  .filters { width: 100%; }
+  .filters label:first-child { flex: 1; }
+  .filters input { width: 100%; }
+  .content-grid { grid-template-columns: 1fr; }
+  .task-form { grid-row: 1; }
+  footer { gap: 10px; font-size: 9px; }
+}

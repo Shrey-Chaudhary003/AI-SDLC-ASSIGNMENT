@@ -15,14 +15,22 @@ module.exports = [
   { ignores: ['node_modules/**', 'coverage/**', 'evidence/**', '.harness/**', 'tests/**'] },
   security.configs.recommended,
   {
-    files: ['**/*.js'],
+    files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'commonjs',
+      parserOptions: { ecmaFeatures: { jsx: true } },
       globals: { ...globals.node },
     },
     rules: {
       'security/detect-non-literal-fs-filename': 'off',
+    },
+  },
+  {
+    files: ['web/**/*.jsx'],
+    languageOptions: {
+      sourceType: 'module',
+      globals: { ...globals.browser },
     },
   },
 ];

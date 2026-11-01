@@ -4,7 +4,7 @@
 //   * no suppression comments (eslint-disable, c8 ignore, nosec ...)
 //   * no weak / skipped / trivial tests
 //   * every test title carries an AC-ID and every AC-ID in the spec has at least one test
-//   * no runtime dependencies (Node built-ins only)
+//   * runtime dependencies are limited to the approved application stack
 const fs = require('node:fs');
 const path = require('node:path');
 const { walk } = require('../lib/util');
@@ -80,11 +80,12 @@ function scanTests(root, testFiles, findings) {
   const testedAcs = {};
   for (const rel of testFiles) {
     const text = fs.readFileSync(path.join(root, rel), 'utf8');
-    if (!/node:test/.test(text) || !/node:assert\/strict/.test(text)) {
+    const isVitest = /from ['"]vitest['"]/.test(text);
+    if ((!/node:test/.test(text) || !/node:assert\/strict/.test(text)) && !isVitest) {
       findings.push({
         code: 'TEST_STYLE',
         file: rel,
-        message: "Tests must use require('node:test') and require('node:assert/strict').",
+        message: "Backend tests must use node:test and node:assert/strict; browser tests must use Vitest.",
       });
     }
     text.split('\n').forEach((line, i) => {
@@ -117,8 +118,8 @@ module.exports = {
   name: 'static',
   run({ root }) {
     const findings = [];
-    const srcFiles = walk(root, 'src').filter((f) => f.endsWith('.js'));
-    const testFiles = walk(root, 'tests').filter((f) => /\.test\.(?:c|m)?js$/.test(f));
+    const srcFiles = [...walk(root, 'src'), ...walk(root, 'web')].filter((f) => /\.(?:js|jsx)$/.test(f));
+    const testFiles = walk(root, 'tests').filter((f) => /\.test\.(?:c|m)?jsx?$/.test(f));
 
     scanSuppressions(root, [...srcFiles, ...testFiles], findings);
     const testedAcs = scanTests(root, testFiles, findings);
@@ -141,10 +142,12 @@ module.exports = {
     const pkg = path.join(root, 'package.json');
     if (fs.existsSync(pkg)) {
       const deps = JSON.parse(fs.readFileSync(pkg, 'utf8')).dependencies || {};
-      if (Object.keys(deps).length > 0) {
+      const allowed = new Set(['express', 'react', 'react-dom']);
+      const unexpected = Object.keys(deps).filter((name) => !allowed.has(name));
+      if (unexpected.length > 0) {
         findings.push({
           code: 'RUNTIME_DEPENDENCY',
-          message: `Runtime dependencies are not allowed (Node built-ins only): ${Object.keys(deps).join(', ')}`,
+          message: `Runtime dependencies are not approved: ${unexpected.join(', ')}`,
         });
       }
     }

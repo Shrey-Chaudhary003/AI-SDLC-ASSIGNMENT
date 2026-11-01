@@ -1,0 +1,126 @@
+{
+  "label": "initial",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "lint",
+      "status": "FAIL",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "complexity",
+          "file": "src/cli.js",
+          "line": 24,
+          "message": "Function 'hasValidDependencyShape' has a complexity of 15. Maximum allowed is 12.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/cli.js",
+          "line": 53,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/storage.js",
+          "line": 24,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/storage.js",
+          "line": 34,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "gate": "security",
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/arguments.js",
+          "line": 68,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/arguments.js",
+          "line": 148,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 62,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 72,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 104,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 114,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 134,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 192,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 192,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-009: update changes supplied fields and normalizes tags :: --- | duration_ms: 14.3205 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:232:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | + actual - expected | + '{\"id\":\"task-001\",\"title\":\"New\",\"description\":\"note\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\"}\\n' | - '{\"id\":\"task-001\",\"title\":\"New\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\",\"description\":\"note\"}\\n' | code: 'ERR_ASSERTION' | name: 'AssertionError'"
+        },
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-048: every contract usage and validation error has its exact response :: --- | duration_ms: 209.8914 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:755:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | 0 !== 1 | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1 | actual: 0"
+        }
+      ]
+    }
+  ]
+}

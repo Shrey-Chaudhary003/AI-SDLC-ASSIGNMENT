@@ -58,8 +58,7 @@ function buildNewTask(id, title, priority, tags, options, now) {
 }
 
 function updateTask(command, tasks) {
-  const index = findIndex(tasks, command.id);
-  const current = tasks[index];
+  const current = findTask(tasks, command.id);
   const options = command.options;
   const title = options.has('--title')
     ? validateTitle(options.get('--title'))
@@ -69,7 +68,7 @@ function updateTask(command, tasks) {
     : current.priority;
   const tags = updatedTags(options, current.tags);
   const updated = buildUpdatedTask(current, title, priority, tags, options);
-  tasks[index] = updated;
+  replaceTask(tasks, current, updated);
   return { result: updated, changed: true };
 }
 
@@ -100,22 +99,20 @@ function buildUpdatedTask(current, title, priority, tags, options) {
 }
 
 function changeStatus(command, tasks) {
-  const index = findIndex(tasks, command.id);
-  const task = tasks[index];
+  const task = findTask(tasks, command.id);
   const target = validateStatus(command.status);
   if (!isAllowedTransition(task.status, target)) {
     throw transitionError(task.status, target);
   }
-  return replaceStatus(tasks, index, task, target);
+  return replaceStatus(tasks, task, target);
 }
 
 function reopenTask(command, tasks) {
-  const index = findIndex(tasks, command.id);
-  const task = tasks[index];
+  const task = findTask(tasks, command.id);
   if (task.status !== 'done') {
     throw transitionError(task.status, 'todo');
   }
-  return replaceStatus(tasks, index, task, 'todo');
+  return replaceStatus(tasks, task, 'todo');
 }
 
 function isAllowedTransition(from, to) {
@@ -129,29 +126,29 @@ function transitionError(from, to) {
   return new CliError(`invalid status transition: ${from} -> ${to}`);
 }
 
-function replaceStatus(tasks, index, task, status) {
+function replaceTask(tasks, current, updated) {
+  tasks.splice(tasks.indexOf(current), 1, updated);
+}
+
+function replaceStatus(tasks, task, status) {
   const updated = { ...task, status };
-  tasks[index] = updated;
+  replaceTask(tasks, task, updated);
   return { result: updated, changed: true };
 }
 
 function deleteTask(command, tasks) {
-  const index = findIndex(tasks, command.id);
-  const [task] = tasks.splice(index, 1);
+  const task = findTask(tasks, command.id);
+  tasks.splice(tasks.indexOf(task), 1);
   return { result: { deleted: true, id: task.id }, changed: true };
 }
 
 function findTask(tasks, id) {
-  return tasks[findIndex(tasks, id)];
-}
-
-function findIndex(tasks, id) {
   validateTaskId(id);
-  const index = tasks.findIndex((task) => task.id === id);
-  if (index < 0) {
+  const task = tasks.find((entry) => entry.id === id);
+  if (!task) {
     throw new CliError(`task not found: ${id}`, 3);
   }
-  return index;
+  return task;
 }
 
 function listTasks(options, tasks) {
@@ -184,17 +181,27 @@ function sortByPriority(tasks) {
 }
 
 function compareCodePoints(left, right) {
-  const leftPoints = [...left];
-  const rightPoints = [...right];
-  const length = Math.min(leftPoints.length, rightPoints.length);
-  for (let index = 0; index < length; index += 1) {
+  const leftPoints = left[Symbol.iterator]();
+  const rightPoints = right[Symbol.iterator]();
+  while (true) {
+    const leftPoint = leftPoints.next();
+    const rightPoint = rightPoints.next();
+    if (leftPoint.done || rightPoint.done) {
+      return compareLengths(leftPoint.done, rightPoint.done);
+    }
     const difference =
-      leftPoints[index].codePointAt(0) - rightPoints[index].codePointAt(0);
+      leftPoint.value.codePointAt(0) - rightPoint.value.codePointAt(0);
     if (difference !== 0) {
       return difference;
     }
   }
-  return leftPoints.length - rightPoints.length;
+}
+
+function compareLengths(leftDone, rightDone) {
+  if (leftDone && rightDone) {
+    return 0;
+  }
+  return leftDone ? -1 : 1;
 }
 
 module.exports = { execute };

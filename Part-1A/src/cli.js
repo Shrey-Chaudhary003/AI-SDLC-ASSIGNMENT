@@ -22,35 +22,50 @@ function validateDependencies(deps) {
 }
 
 function hasValidDependencyShape(deps) {
-  if (deps === null || typeof deps !== 'object' || Array.isArray(deps)) {
-    return false;
-  }
+  return (
+    isDependencyRecord(deps) &&
+    hasExactDependencyKeys(deps) &&
+    hasValidDependencyMembers(deps)
+  );
+}
+
+function isDependencyRecord(deps) {
+  return deps !== null && typeof deps === 'object' && !Array.isArray(deps);
+}
+
+function hasExactDependencyKeys(deps) {
   const keys = Reflect.ownKeys(deps);
   if (keys.length !== DEPENDENCY_KEYS.size) {
     return false;
   }
-  if (keys.some((key) => typeof key !== 'string' || !DEPENDENCY_KEYS.has(key))) {
-    return false;
+  for (const key of keys) {
+    if (typeof key !== 'string' || !DEPENDENCY_KEYS.has(key)) {
+      return false;
+    }
   }
+  return true;
+}
+
+function hasValidDependencyMembers(deps) {
   return (
     typeof deps.storagePath === 'string' &&
     deps.storagePath.length > 0 &&
     typeof deps.clock === 'function' &&
     typeof deps.idFactory === 'function' &&
-    deps.stdout !== null &&
-    typeof deps.stdout === 'object' &&
-    typeof deps.stdout.write === 'function' &&
-    deps.stderr !== null &&
-    typeof deps.stderr === 'object' &&
-    typeof deps.stderr.write === 'function'
+    hasValidSink(deps.stdout) &&
+    hasValidSink(deps.stderr)
   );
+}
+
+function hasValidSink(sink) {
+  return sink !== null && typeof sink === 'object' && typeof sink.write === 'function';
 }
 
 function readValidClock(clock) {
   let now;
   try {
     now = clock();
-  } catch (error) {
+  } catch {
     throw invalidDependencies();
   }
   if (!(now instanceof Date) || Number.isNaN(now.getTime())) {

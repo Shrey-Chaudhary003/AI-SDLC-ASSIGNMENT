@@ -1,122 +1,90 @@
 <!--
 Sync Impact Report
-Version change: 3.4.0 -> 3.5.0
-Modified principles: Principle VII, allowing explicitly requested
-  specification-checklist artifacts for the active feature
-Added sections: narrow /speckit-checklist artifact scope
-Removed sections: none
+Version change: 3.5.0 -> 4.0.0
+Modified principles: architecture, dependency policy, deterministic dependency
+  injection, test strategy, implementation boundaries
+Added sections: React/Vite web client and Express REST API governance
+Removed sections: CLI-only application scope
 Follow-up TODOs: none
 -->
 
-# Smart Todo CLI Constitution
+# Smart Todo Constitution
 
 ## Core Principles
 
 ### I. Specification Authority
 For each feature, `specs/<feature>/spec.md`, `plan.md`, `tasks.md`, and
-`contracts/` are the single source of truth. Every functional requirement MUST
-have a unique `FR-001`, `FR-002`, ... ID. Every acceptance criterion MUST have a
-unique `AC-001`, `AC-002`, ... ID, use Given/When/Then form, and define
-decidable pass/fail behavior. If an ambiguity is found later, it MUST be
-resolved in the upstream artifact and recorded with a date in its `Change
-History` section; implementation MUST NOT silently resolve it.
+`contracts/` are the source of truth. Every functional requirement MUST have a
+unique `FR-001`, `FR-002`, ... ID and every acceptance criterion a unique
+`AC-001`, `AC-002`, ... ID in Given/When/Then form with decidable pass/fail
+behavior. Ambiguities MUST be resolved in the upstream artifact and recorded
+with a date in its Change History; implementation MUST NOT silently resolve
+them. The CLI feature remains independently supported as specified in
+`specs/001-smart-todo-cli/`.
 
-### II. Lint Quality
-ESLint MUST use `eslint.config.js` and report exactly zero errors and zero
-warnings for `src/` and `tests/`. The cyclomatic complexity of every function
-MUST be at most 12.
+### II. Architecture and Dependencies
+The product consists of a React/Vite browser client, a Node.js 20+ CommonJS
+Express 5 REST API, and the existing CommonJS CLI. The API and CLI share task
+validation, service logic, and one local JSON-file storage format. Runtime
+dependencies are limited to Express, React, and React DOM. Development
+dependencies may include ESLint, eslint-plugin-security, eslint-plugin-react,
+Vite, Vitest, React Testing Library, jsdom, and coverage tools. Do not add dependencies without
+updating the feature plan and manifest.
 
-### III. Security
-`eslint-plugin-security` MUST use `eslint.security.config.js` and report zero
-findings on `src/`. Source code MUST NOT contain hard-coded secrets, keys, or
-machine-specific paths.
+### III. Deterministic and Safe Boundaries
+All task timestamps and IDs are injected into service/API operations. Only the
+CLI and server composition roots may construct real clocks, ID factories, or
+read process configuration. Storage uses Node.js built-ins and validates
+records before mutation. User-controlled keys MUST NOT be used as keys on
+ordinary objects; use `Map` or validated fixed field names. API responses MUST
+be JSON, and API errors MUST NOT expose stack traces or filesystem details.
+The browser MUST render task text as text, not executable markup.
 
-### IV. Exact Tests and Coverage
-Every test in `tests/` MUST pass using `node:test` and `node:assert/strict`.
-Line coverage of `src/` measured by c8 MUST be at least 90 percent. Each test
-title MUST start with the AC-ID it verifies, such as `AC-007: ...`. Exit-code
-and output assertions MUST check exact values with assertions such as
-`assert.strictEqual` and `assert.deepStrictEqual`; ranges are forbidden.
+### IV. Quality and Security
+ESLint MUST report zero errors and warnings on application and test JavaScript,
+with function complexity at most 12. eslint-plugin-security MUST report zero
+findings on server/source JavaScript. No secrets, machine-specific paths,
+suppression comments, disabled rules, or weakened acceptance tests are
+permitted. Source functions MUST be at most 30 lines.
 
-### V. Deterministic Dependencies
-Modules under `src/` MUST NOT call `Date`, `Math.random`, or `crypto` directly,
-except that the single composition-root function MAY call `new Date()` to
-construct the injected real clock. The clock, ID generator, storage path,
-stdout, and stderr MUST be injected through a `deps` object. Exactly one
-composition-root function MAY construct the real dependencies. All other
-source modules MUST use only the injected clock and ID generator. The same
-input and dependency state MUST produce the same output.
+### V. Tests and Evidence
+The CLI and backend API MUST be tested with `node:test` and
+`node:assert/strict`. The React UI MUST be tested with Vitest and React Testing
+Library. Test titles MUST begin with the AC-ID they verify. Assertions on
+observable values MUST be exact. Line coverage of application source MUST be
+at least 90 percent. Every acceptance criterion MUST have a deterministic test;
+API and service tests inject fixed clocks, IDs, and temporary storage. A
+human-readable harness PASS MUST be followed by human ACCEPT or REJECT and
+known limitations.
 
-### VI. Built-In Runtime Dependencies
-The application MUST use Node.js CommonJS and JSON-file persistence. It MUST
-have no runtime dependencies; all runtime capabilities MUST use Node.js
-built-in modules.
+### VI. Implementation Boundaries
+After the user has approved the feature specification and tasks, a coding agent
+MAY change `src/`, `web/`, `index.html`, `vite.config.js`, `package.json`,
+`package-lock.json`, `tests/`, and approved ESLint configuration needed for
+the React client. It MUST NOT change `.harness/` after a baseline is locked,
+except when the user explicitly authorizes a harness update and the new
+baseline is locked before implementation. Spec Kit artifacts may be edited
+only in an explicitly requested planning/specification task. Never change
+acceptance criteria to make implementation pass.
 
-### VII. Coding-Agent Boundaries
-A coding agent MUST make application implementation changes only under
-`src/`. When explicitly invoked by the user, `/speckit-specify` MAY create or
-update the single requested feature's `spec.md` under `specs/<feature>/` and
-the required `.specify/feature.json` path metadata. When explicitly invoked by
-the user, `/speckit-clarify` MAY update the active feature's `spec.md` by
-recording answers in its `Clarifications` section and dated `Change History`.
-When explicitly invoked by the user, `/speckit-plan` MAY create or update only
-the active feature's `plan.md`, `research.md`, `data-model.md`, `quickstart.md`,
-`contracts/cli-contract.md`, and `spec.md` entries in `Clarifications` and
-`Change History` needed to align that specification with the approved plan and
-contract. The `/speckit-plan` exception MAY also update the active feature's
-`Functional Requirements`, `Acceptance Criteria`, `Assumptions`,
-`Success Criteria`, `Clarifications`, and `Change History` sections as needed
-to align the specification with the approved plan and contract. These
-exceptions MUST NOT authorize changes to any other files under `specs/`.
-When explicitly invoked by the user, `/speckit-tasks` MAY create or update
-only `tasks.md` for the active feature. Its tasks MUST be implementation-only,
-reference the applicable FR/AC IDs and human-owned test files, and MUST NOT
-create or modify tests or harness files. A coding agent MUST NOT create, edit,
-rename, or delete files in `tests/`, `.harness/`,
-`.specify/memory/constitution.md`, `eslint.config.js`, or
-`eslint.security.config.js`, except an explicit user-requested constitution
-amendment. It MUST NOT add suppression comments such as `eslint-disable`,
-`c8 ignore`, or `nosec`, skip or weaken a test, or lower a quality threshold.
-When explicitly invoked by the user, `/speckit-checklist` MAY create or update
-only `checklists/requirements.md` for the active feature. This artifact MUST
-evaluate specification quality without changing requirements, acceptance
-criteria, tests, or harness files.
+### VII. Repair Limits
+Preserve the initial implementation before any repair. At most two repair
+attempts may follow, each driven by recorded harness findings and limited to
+those findings. Preserve evidence from each attempt.
 
-### VIII. Implementation Evidence and Repairs
-The first generated implementation MUST be preserved before any repair. No
-more than two repair attempts MAY follow, and each repair MUST be driven only
-by findings from the harness. Evidence from the initial implementation and
-each repair MUST remain available for review.
+## Data and Persistence
 
-### IX. Human Acceptance
-A harness PASS MUST be followed by a human `ACCEPT` or `REJECT` decision.
-Known limitations MUST be recorded with that decision; a harness PASS alone
-does not constitute acceptance.
-
-## Architecture and Persistence
-
-The CLI MUST persist task data in a JSON file. Changes to the storage format,
-command behavior, or externally observable output MUST be specified in the
-authoritative feature artifacts and verified against their acceptance
-criteria.
-
-## Development and Quality Gates
-
-Before delivery, the applicable ESLint and security checks MUST meet the exact
-thresholds in this constitution, and all tests MUST pass with at least 90
-percent line coverage of `src/`. Acceptance evidence MUST include exact
-assertions for command exit codes and output. Any proposed exception requires
-an approved constitution amendment; implementation MUST NOT bypass a gate.
+The canonical task collection is a UTF-8 JSON array in one local file. The
+server and CLI MUST use the same path configuration and storage adapter. A
+missing file means an empty collection; malformed or unreadable data MUST
+produce an explicit error and MUST NOT be overwritten.
 
 ## Governance
 
-This constitution governs project specifications, plans, contracts,
-implementation, validation, and review. Amendments MUST be made explicitly in
-this file and update the version and amendment date. Use semantic versioning:
-MAJOR for incompatible changes to principles, MINOR for new principles or
-materially expanded requirements, and PATCH for clarifications and
-non-semantic edits. Reviews MUST verify compliance with every applicable
-principle. A human MUST record the final ACCEPT or REJECT decision and known
-limitations after a harness PASS.
+This constitution governs feature specifications, plans, contracts,
+implementation, validation, and review. Amendments MUST update the version and
+amendment date. Use semantic versioning: MAJOR for incompatible principle
+changes, MINOR for new principles or materially expanded requirements, PATCH
+for clarifications and non-semantic edits.
 
-**Version**: 3.5.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 4.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01

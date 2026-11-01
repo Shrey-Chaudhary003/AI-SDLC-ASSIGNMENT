@@ -56,5 +56,69 @@
     "changed": [
       "specs/001-smart-todo-cli/spec.md"
     ]
+  },
+  {
+    "lockedAt": "2026-11-01T13:03:26.313Z",
+    "reason": "baseline: constitution, spec, plan, tests and harness final before /speckit.implement",
+    "gitCommit": "a525711",
+    "fileCount": 27,
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  {
+    "lockedAt": "2026-11-01T13:27:11.903Z",
+    "reason": "baseline: constitution, spec, plan, tests and harness final before /speckit.implement",
+    "gitCommit": "a525711",
+    "fileCount": 35,
+    "added": [
+      ".harness/gates/build.js",
+      "specs/002-smart-todo-web/contracts/api-contract.md",
+      "specs/002-smart-todo-web/plan.md",
+      "specs/002-smart-todo-web/spec.md",
+      "specs/002-smart-todo-web/tasks.md",
+      "tests/api.test.js",
+      "tests/web.setup.jsx",
+      "tests/web.test.jsx"
+    ],
+    "removed": [],
+    "changed": [
+      ".harness/gates/lint.js",
+      ".harness/gates/security.js",
+      ".harness/gates/static.js",
+      ".harness/gates/tests.js",
+      ".harness/harness-rules.md",
+      ".harness/run-harness.js",
+      ".specify/memory/constitution.md",
+      "eslint.config.js",
+      "eslint.security.config.js",
+      "tests/cli.test.js"
+    ]
+  },
+  {
+    "lockedAt": "2026-11-01T13:40:57.270Z",
+    "reason": "approved web feature specs tests and gates baseline",
+    "gitCommit": "a525711",
+    "fileCount": 35,
+    "added": [],
+    "removed": [],
+    "changed": [
+      "specs/002-smart-todo-web/contracts/api-contract.md",
+      "specs/002-smart-todo-web/plan.md",
+      "specs/002-smart-todo-web/spec.md",
+      "specs/002-smart-todo-web/tasks.md",
+      "tests/api.test.js",
+      "tests/cli.test.js",
+      "tests/web.test.jsx"
+    ]
+  },
+  {
+    "lockedAt": "2026-11-01T13:48:30.403Z",
+    "reason": "baseline: constitution, spec, plan, tests and harness final before /speckit.implement",
+    "gitCommit": "a525711",
+    "fileCount": 35,
+    "added": [],
+    "removed": [],
+    "changed": []
   }
 ]

@@ -64,21 +64,22 @@ function extractUpdateId(args) {
 function parseOptions(tokens, command) {
   const options = new Map();
   const positionals = [];
-  for (let index = 0; index < tokens.length; index += 1) {
-    const token = tokens[index];
+  const iterator = tokens[Symbol.iterator]();
+  let entry = iterator.next();
+  while (!entry.done) {
+    const token = entry.value;
     if (!token.startsWith('--')) {
       positionals.push(token);
+      entry = iterator.next();
       continue;
     }
-    readOption(tokens, command, options, token, index);
-    if (OPTION_TYPES.get(token) !== 'boolean') {
-      index += 1;
-    }
+    readOption(iterator, command, options, token);
+    entry = iterator.next();
   }
   return { options, positionals };
 }
 
-function readOption(tokens, command, options, token, index) {
+function readOption(iterator, command, options, token) {
   const type = OPTION_TYPES.get(token);
   if (!type) {
     throw new CliError(`unknown option: ${token}`);
@@ -93,11 +94,11 @@ function readOption(tokens, command, options, token, index) {
     options.set(token, true);
     return;
   }
-  const value = tokens[index + 1];
-  if (value === undefined || value.startsWith('--')) {
+  const entry = iterator.next();
+  if (entry.done || entry.value.startsWith('--')) {
     throw new CliError(`missing value for option: ${token}`);
   }
-  storeOption(options, token, value, type);
+  storeOption(options, token, entry.value, type);
 }
 
 function storeOption(options, token, value, type) {
@@ -145,14 +146,14 @@ function validatePositionals(name, options, positionals) {
     return missingArgument(name, positionals.length, options);
   }
   if (positionals.length > expected) {
-    throw new CliError(`unexpected argument: ${positionals[expected]}`);
+    throw new CliError(`unexpected argument: ${positionals.at(expected)}`);
   }
   if (name === 'add' || name === 'list') {
     return { name, options };
   }
-  const id = validateTaskId(positionals[0]);
+  const id = validateTaskId(positionals.at(0));
   return name === 'status'
-    ? { name, id, status: positionals[1], options }
+    ? { name, id, status: positionals.at(1), options }
     : { name, id, options };
 }
 

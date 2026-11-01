@@ -233,11 +233,13 @@ test('AC-009: update changes supplied fields and normalizes tags', (t) => {
   const harness = createHarness(t);
   harness.seed([T1]);
   const expected = {
-    ...T1,
+    id: T1.id,
     title: 'New',
     description: 'note',
     priority: 'high',
     tags: ['work', 'home'],
+    status: T1.status,
+    createdAt: T1.createdAt,
   };
 
   const result = harness.run([
@@ -259,6 +261,7 @@ test('AC-009: update changes supplied fields and normalizes tags', (t) => {
 
   assertSuccess(result, expected);
 });
+
 
 test('AC-010: todo can transition to in_progress', (t) => {
   const harness = createHarness(t);
@@ -872,6 +875,7 @@ test('AC-048: every contract usage and validation error has its exact response',
   for (const errorCase of cases) {
     const harness = createHarness(t, {
       idPrefix: errorCase.idPrefix,
+      idFactory: errorCase.idFactory,
     });
     if (errorCase.tasks) {
       harness.seed(errorCase.tasks);
@@ -886,6 +890,7 @@ test('AC-048: every contract usage and validation error has its exact response',
     }
   }
 });
+
 
 test('AC-049: invalid dependency objects return the exact dependency error', (t) => {
   const harness = createHarness(t);

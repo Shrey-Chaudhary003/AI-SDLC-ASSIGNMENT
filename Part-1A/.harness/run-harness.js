@@ -19,7 +19,7 @@ const { sha256 } = require('./lib/util');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'evidence', 'harness-results');
-const GATES = ['integrity', 'static', 'secrets', 'lint', 'security', 'tests'].map((n) => require(`./gates/${n}`));
+const GATES = ['integrity', 'static', 'secrets', 'lint', 'security', 'build', 'tests'].map((n) => require(`./gates/${n}`));
 
 function runGate(gate, ctx) {
   const started = Date.now();

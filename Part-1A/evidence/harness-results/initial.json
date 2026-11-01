@@ -1,0 +1,168 @@
+{
+  "label": "initial",
+  "timestamp": "2026-11-01T12:56:16.670Z",
+  "overall": "FAIL",
+  "node": "v26.13.0",
+  "gitCommit": "a525711",
+  "lockedBaselineSha256": "0867fb6b1cc402badbcdb17320b7a0ffa6a21abf7c01169e5462c7ea7fcfa52e",
+  "gates": {
+    "integrity": {
+      "status": "PASS",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [],
+      "details": {
+        "lockedAt": "2026-11-01T12:50:02.270Z",
+        "protectedFileCount": 27
+      },
+      "durationMs": 65
+    },
+    "static": {
+      "status": "PASS",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [],
+      "durationMs": 19
+    },
+    "secrets": {
+      "status": "PASS",
+      "command": "regex secret scan + git ls-files .env check",
+      "findings": [],
+      "durationMs": 397
+    },
+    "lint": {
+      "status": "FAIL",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "complexity",
+          "file": "src/cli.js",
+          "line": 24,
+          "message": "Function 'hasValidDependencyShape' has a complexity of 15. Maximum allowed is 12.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/cli.js",
+          "line": 53,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/storage.js",
+          "line": 24,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        },
+        {
+          "code": "no-unused-vars",
+          "file": "src/storage.js",
+          "line": 34,
+          "message": "'error' is defined but never used.",
+          "severity": "error"
+        }
+      ],
+      "stdout": "...[clipped]...\nnused-vars\",\"severity\":2,\"message\":\"'error' is defined but never used.\",\"line\":24,\"column\":12,\"nodeType\":\"Identifier\",\"messageId\":\"unusedVar\",\"endLine\":24,\"endColumn\":17},{\"ruleId\":\"no-unused-vars\",\"severity\":2,\"message\":\"'error' is defined but never used.\",\"line\":34,\"column\":12,\"nodeType\":\"Identifier\",\"messageId\":\"unusedVar\",\"endLine\":34,\"endColumn\":17}],\"suppressedMessages\":[],\"errorCount\":2,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"source\":\"'use strict';\\r\\n\\r\\nconst fs = require('node:fs');\\r\\nconst { storageError } = require('./errors');\\r\\nconst { validateStoredCollection } = require('./validation');\\r\\n\\r\\nfunction load(storagePath) {\\r\\n  let contents;\\r\\n  try {\\r\\n    contents = fs.readFileSync(storagePath, 'utf8');\\r\\n  } catch (error) {\\r\\n    if (error.code === 'ENOENT') {\\r\\n      return [];\\r\\n    }\\r\\n    throw storageError();\\r\\n  }\\r\\n  return parseTasks(contents);\\r\\n}\\r\\n\\r\\nfunction parseTasks(contents) {\\r\\n  let tasks;\\r\\n  try {\\r\\n    tasks = JSON.parse(contents);\\r\\n  } catch (error) {\\r\\n    throw storageError();\\r\\n  }\\r\\n  return validateStoredCollection(tasks);\\r\\n}\\r\\n\\r\\nfunction save(storagePath, tasks) {\\r\\n  const contents = `${JSON.stringify(tasks)}\\\\n`;\\r\\n  try {\\r\\n    fs.writeFileSync(storagePath, contents, 'utf8');\\r\\n  } catch (error) {\\r\\n    throw storageError();\\r\\n  }\\r\\n}\\r\\n\\r\\nmodule.exports = { load, save };\\r\\n\",\"usedDeprecatedRules\":[]},{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\src\\\\validation.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]},{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]}]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 7
+      },
+      "durationMs": 2929
+    },
+    "security": {
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/arguments.js",
+          "line": 68,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/arguments.js",
+          "line": 148,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 62,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 72,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 104,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 114,
+          "message": "Variable Assigned to Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 134,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 192,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        },
+        {
+          "code": "security/detect-object-injection",
+          "file": "src/service.js",
+          "line": 192,
+          "message": "Generic Object Injection Sink",
+          "severity": "warning"
+        }
+      ],
+      "stdout": "...[clipped]...\nask not found: ${id}`, 3);\\r\\n  }\\r\\n  return index;\\r\\n}\\r\\n\\r\\nfunction listTasks(options, tasks) {\\r\\n  const filters = normalizeTags(options.get('--tag') || []);\\r\\n  const matches = tasks.filter((task) =>\\r\\n    filters.every((tag) => task.tags.includes(tag)),\\r\\n  );\\r\\n  if (options.get('--sort') === 'priority') {\\r\\n    return sortByPriority(matches);\\r\\n  }\\r\\n  return matches;\\r\\n}\\r\\n\\r\\nfunction sortByPriority(tasks) {\\r\\n  const rank = new Map([\\r\\n    ['high', 0],\\r\\n    ['medium', 1],\\r\\n    ['low', 2],\\r\\n  ]);\\r\\n  return tasks.slice().sort((left, right) => {\\r\\n    const priority = rank.get(left.priority) - rank.get(right.priority);\\r\\n    if (priority !== 0) {\\r\\n      return priority;\\r\\n    }\\r\\n    if (left.createdAt !== right.createdAt) {\\r\\n      return left.createdAt < right.createdAt ? -1 : 1;\\r\\n    }\\r\\n    return compareCodePoints(left.id, right.id);\\r\\n  });\\r\\n}\\r\\n\\r\\nfunction compareCodePoints(left, right) {\\r\\n  const leftPoints = [...left];\\r\\n  const rightPoints = [...right];\\r\\n  const length = Math.min(leftPoints.length, rightPoints.length);\\r\\n  for (let index = 0; index < length; index += 1) {\\r\\n    const difference =\\r\\n      leftPoints[index].codePointAt(0) - rightPoints[index].codePointAt(0);\\r\\n    if (difference !== 0) {\\r\\n      return difference;\\r\\n    }\\r\\n  }\\r\\n  return leftPoints.length - rightPoints.length;\\r\\n}\\r\\n\\r\\nmodule.exports = { execute };\\r\\n\",\"usedDeprecatedRules\":[]},{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\src\\\\storage.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]},{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\src\\\\validation.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]}]\n",
+      "stderr": "ESLint found too many warnings (maximum: 0).\n",
+      "details": {
+        "filesChecked": 6
+      },
+      "durationMs": 1967
+    },
+    "tests": {
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-009: update changes supplied fields and normalizes tags :: --- | duration_ms: 14.3205 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:232:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | + actual - expected | + '{\"id\":\"task-001\",\"title\":\"New\",\"description\":\"note\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\"}\\n' | - '{\"id\":\"task-001\",\"title\":\"New\",\"priority\":\"high\",\"tags\":[\"work\",\"home\"],\"status\":\"todo\",\"createdAt\":\"2026-11-01T10:00:00.000Z\",\"description\":\"note\"}\\n' | code: 'ERR_ASSERTION' | name: 'AssertionError'"
+        },
+        {
+          "code": "TEST_FAILED",
+          "message": "AC-048: every contract usage and validation error has its exact response :: --- | duration_ms: 209.8914 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:755:1' | failureType: 'testCodeFailure' | error: |- | Expected values to be strictly equal: | 0 !== 1 | code: 'ERR_ASSERTION' | name: 'AssertionError' | expected: 1 | actual: 0"
+        }
+      ],
+      "stdout": "...[clipped]...\ntask cannot be reopened\n  ---\n  duration_ms: 14.8131\n  type: 'test'\n  ...\n# Subtest: AC-021: an in_progress task cannot be reopened\nok 21 - AC-021: an in_progress task cannot be reopened\n  ---\n  duration_ms: 16.9229\n  type: 'test'\n  ...\n# Subtest: AC-022: list preserves creation order by default\nok 22 - AC-022: list preserves creation order by default\n  ---\n  duration_ms: 18.6554\n  type: 'test'\n  ...\n# Subtest: AC-023: listing a missing storage file returns an empty array\nok 23 - AC-023: listing a missing storage file returns an empty array\n  ---\n  duration_ms: 5.2386\n  type: 'test'\n  ...\n# Subtest: AC-024: repeated tag filters use AND matching\nok 24 - AC-024: repeated tag filters use AND matching\n  ---\n  duration_ms: 14.3087\n  type: 'test'\n  ...\n# Subtest: AC-025: an unmatched tag filter returns an empty array\nok 25 - AC-025: an unmatched tag filter returns an empty array\n  ---\n  duration_ms: 13.7533\n  type: 'test'\n  ...\n# Subtest: AC-026: added tags are lowercased and deduplicated\nok 26 - AC-026: added tags are lowercased and deduplicated\n  ---\n  duration_ms: 13.3494\n  type: 'test'\n  ...\n# Subtest: AC-027: priority sorting orders priority and stable ties\nok 27 - AC-027: priority sorting orders priority and stable ties\n  ---\n  duration_ms: 14.0278\n  type: 'test'\n  ...\n# Subtest: AC-028: adding to missing storage creates a one-task JSON array\nok 28 - AC-028: adding to missing storage creates a one-task JSON array\n  ---\n  duration_ms: 20.1062\n  type: 'test'\n  ...\n# Subtest: AC-029: corrupt JSON is rejected and left unchanged\nok 29 - AC-029: corrupt JSON is rejected and left unchanged\n  ---\n  duration_ms: 15.856\n  type: 'test'\n  ...\n# Subtest: AC-030: a storage path that cannot be read returns a storage error\nok 30 - AC-030: a storage path that cannot be read returns a storage error\n  ---\n  duration_ms: 7.4767\n  type: 'test'\n  ...\n# Subtest: AC-031: priority sorting orders high before medium before low\nok 31 - AC-031: priority sorting orders high before medium before low\n  ---\n  duration_ms: 13.2782\n  type: 'test'\n  ...\n# Subtest: AC-032: equal-priority and equal-time tasks sort by ID\nok 32 - AC-032: equal-priority and equal-time tasks sort by ID\n  ---\n  duration_ms: 14.2387\n  type: 'test'\n  ...\n# Subtest: AC-033: delete removes a task and returns its ID\nok 33 - AC-033: delete removes a task and returns its ID\n  ---\n  duration_ms: 15.2778\n  type: 'test'\n  ...\n# Subtest: AC-034: tag filters require all requested tags\nok 34 - AC-034: tag filters require all requested tags\n  ---\n  duration_ms: 16.2726\n  type: 'test'\n  ...\n# Subtest: AC-035: update rejects a title longer than 100 characters\nok 35 - AC-035: update rejects a title longer than 100 characters\n  ---\n  duration_ms: 20.7162\n  type: 'test'\n  ...\n# Subtest: AC-036: update rejects an unsupported priority\nok 36 - AC-036: update rejects an unsupported priority\n  ---\n  duration_ms: 20.8284\n  type: 'test'\n  ...\n# Subtest: AC-037: status rejects an unsupported target value\nok 37 - AC-037: status rejects an unsupported target value\n  ---\n  duration_ms: 18.4287\n  type: 'test'\n  ...\n# Subtest: AC-038: an empty tag is rejected without changing storage\nok 38 - AC-038: an empty tag is rejected without changing storage\n  ---\n  duration_ms: 8.6532\n  type: 'test'\n  ...\n# Subtest: AC-039: tag filters are trimmed and lowercased\nok 39 - AC-039: tag filters are trimmed and lowercased\n  ---\n  duration_ms: 13.1101\n  type: 'test'\n  ...\n# Subtest: AC-040: a generated duplicate ID is rejected without a write\nok 40 - AC-040: a generated duplicate ID is rejected without a write\n  ---\n  duration_ms: 19.0911\n  type: 'test'\n  ...\n# Subtest: AC-041: an empty generated ID is rejected without a write\nok 41 - AC-041: an empty generated ID is rejected without a write\n  ---\n  duration_ms: 8.7318\n  type: 'test'\n  ...\n# Subtest: AC-042: an update without fields is rejected without a write\nok 42 - AC-042: an update without fields is rejected without a write\n  ---\n  duration_ms: 15.6206\n  type: 'test'\n  ...\n# Subtest: AC-043: title trimming preserves internal whitespace\nok 43 - AC-043: title trimming preserves internal whitespace\n  ---\n  duration_ms: 9.3524\n  type: 'test'\n  ...\n# Subtest: AC-044: list filters before priority sorting\nok 44 - AC-044: list filters before priority sorting\n  ---\n  duration_ms: 12.425\n  type: 'test'\n  ...\n# Subtest: AC-045: createdAt comes from the injected clock\nok 45 - AC-045: createdAt comes from the injected clock\n  ---\n  duration_ms: 8.8673\n  type: 'test'\n  ...\n# Subtest: AC-046: update can clear description and tags\nok 46 - AC-046: update can clear description and tags\n  ---\n  duration_ms: 16.7715\n  type: 'test'\n  ...\n# Subtest: AC-047: clearing tags cannot be combined with tag updates\nok 47 - AC-047: clearing tags cannot be combined with tag updates\n  ---\n  duration_ms: 17.9686\n  type: 'test'\n  ...\n# Subtest: AC-048: every contract usage and validation error has its exact response\nnot ok 48 - AC-048: every contract usage and validation error has its exact response\n  ---\n  duration_ms: 209.8914\n  type: 'test'\n  location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:755:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    assertFailure (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\tests\\cli.test.js:122:10)\n    TestContext.<anonymous> (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\tests\\cli.test.js:883:5)\n    Test.runInAsyncScope (node:async_hooks:226:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n    Test.postRun (node:internal/test_runner/test:1542:19)\n    Test.run (node:internal/test_runner/test:1467:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)\n  ...\n# Subtest: AC-049: invalid dependency objects return the exact dependency error\nok 49 - AC-049: invalid dependency objects return the exact dependency error\n  ---\n  duration_ms: 4.4538\n  type: 'test'\n  ...\n# Subtest: AC-050: a non-array JSON root is rejected without modification\nok 50 - AC-050: a non-array JSON root is rejected without modification\n  ---\n  duration_ms: 16.4279\n  type: 'test'\n  ...\n# Subtest: AC-051: a mutation against read-only storage reports a write error\nok 51 - AC-051: a mutation against read-only storage reports a write error\n  ---\n  duration_ms: 14.2707\n  type: 'test'\n  ...\n# Subtest: AC-052: add preserves an explicitly empty description\nok 52 - AC-052: add preserves an explicitly empty description\n  ---\n  duration_ms: 7.8251\n  type: 'test'\n  ...\n1..52\n# tests 52\n# suites 0\n# pass 50\n# fail 2\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 1406.0399\n---------------|---------|----------|---------|---------|-------------------------------------------\nFile           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                         \n---------------|---------|----------|---------|---------|-------------------------------------------\nAll files      |   91.54 |    87.29 |   98.18 |   91.54 |                                           \n arguments.js  |   98.81 |    97.33 |     100 |   98.81 | 164-165                                   \n cli.js        |   80.58 |    83.33 |   83.33 |   80.58 | 26-27,33-34,54-55,80-81,88-97,102-103     \n errors.js     |     100 |      100 |     100 |     100 |                                           \n service.js    |      97 |     92.3 |     100 |      97 | 29,93-94,180-181,197                      \n storage.js    |     100 |      100 |     100 |     100 |                                           \n validation.js |   83.25 |    67.79 |     100 |   83.25 | ...40-141,145-146,154-155,173-174,187-188 \n---------------|---------|----------|---------|---------|-------------------------------------------\n",
+      "stderr": "",
+      "details": {
+        "lineCoveragePercent": 91.54,
+        "testFiles": 1
+      },
+      "durationMs": 2841
+    }
+  }
+}
