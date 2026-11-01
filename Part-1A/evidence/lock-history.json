@@ -1,0 +1,49 @@
+[
+  {
+    "lockedAt": "2026-11-01T12:18:16.851Z",
+    "reason": "baseline: constitution, spec, plan, tests and harness final before /speckit.implement",
+    "gitCommit": "cc57134",
+    "fileCount": 25,
+    "added": [
+      ".harness/gates/integrity.js",
+      ".harness/gates/lint.js",
+      ".harness/gates/secrets.js",
+      ".harness/gates/security.js",
+      ".harness/gates/static.js",
+      ".harness/gates/tests.js",
+      ".harness/harness-config.json",
+      ".harness/harness-rules.md",
+      ".harness/lib/manifest.js",
+      ".harness/lib/util.js",
+      ".harness/lock.js",
+      ".harness/repair-prompt.md",
+      ".harness/run-harness.js",
+      ".harness/selftest.js",
+      ".harness/snapshot.js",
+      ".specify/memory/constitution.md",
+      "specs/001-smart-todo-cli/checklists/requirements.md",
+      "specs/001-smart-todo-cli/contracts/cli-contract.md",
+      "specs/001-smart-todo-cli/data-model.md",
+      "specs/001-smart-todo-cli/plan.md",
+      "specs/001-smart-todo-cli/quickstart.md",
+      "specs/001-smart-todo-cli/research.md",
+      "specs/001-smart-todo-cli/spec.md",
+      "specs/001-smart-todo-cli/tasks.md",
+      "tests/cli.test.js"
+    ],
+    "removed": [],
+    "changed": []
+  },
+  {
+    "lockedAt": "2026-11-01T12:44:23.815Z",
+    "reason": "baseline before implement, added eslint configs",
+    "gitCommit": "cc57134",
+    "fileCount": 27,
+    "added": [
+      "eslint.config.js",
+      "eslint.security.config.js"
+    ],
+    "removed": [],
+    "changed": []
+  }
+]

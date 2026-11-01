@@ -1,0 +1,81 @@
+{
+  "label": "dev-red4",
+  "timestamp": "2026-11-01T12:25:18.467Z",
+  "overall": "FAIL",
+  "node": "v26.13.0",
+  "gitCommit": "cc57134",
+  "lockedBaselineSha256": "718c7253ad6933a297c18cfdbf8110bf117ecbb178bed7b9ebd369a57f780c07",
+  "gates": {
+    "integrity": {
+      "status": "FAIL",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "eslint.config.js",
+          "message": "eslint.config.js was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "eslint.security.config.js",
+          "message": "eslint.security.config.js was added after the baseline was locked."
+        }
+      ],
+      "details": {
+        "lockedAt": "2026-11-01T12:18:16.851Z",
+        "protectedFileCount": 25
+      },
+      "durationMs": 59
+    },
+    "static": {
+      "status": "PASS",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [],
+      "durationMs": 15
+    },
+    "secrets": {
+      "status": "PASS",
+      "command": "regex secret scan + git ls-files .env check",
+      "findings": [],
+      "durationMs": 262
+    },
+    "lint": {
+      "status": "PASS",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [],
+      "stdout": "[{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]}]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 1
+      },
+      "durationMs": 2032
+    },
+    "security": {
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "NO_FILES_CHECKED",
+          "message": "security gate checked 0 files. src/ must contain JavaScript files."
+        }
+      ],
+      "stdout": "[]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 0
+      },
+      "durationMs": 1640
+    },
+    "tests": {
+      "status": "SKIPPED",
+      "command": "node --test",
+      "findings": [
+        {
+          "code": "SKIPPED_INTEGRITY_FAILED",
+          "message": "Dynamic checks skipped until protected-file findings are resolved (same rule as Lab Sheet 2)."
+        }
+      ],
+      "durationMs": 0
+    }
+  }
+}

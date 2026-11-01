@@ -1,0 +1,10 @@
+{
+  "minLineCoveragePercent": 90,
+  "toolTimeoutMs": 180000,
+  "protectedPaths": ["tests", "specs", ".harness"],
+  "protectedFiles": [
+    "eslint.config.js",
+    "eslint.security.config.js",
+    ".specify/memory/constitution.md"
+  ]
+}

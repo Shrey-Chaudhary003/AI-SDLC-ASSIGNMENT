@@ -1,0 +1,76 @@
+{
+  "label": "dev-red5",
+  "timestamp": "2026-11-01T12:45:04.933Z",
+  "overall": "FAIL",
+  "node": "v26.13.0",
+  "gitCommit": "cc57134",
+  "lockedBaselineSha256": "273c6ad8c6667da408d549133e71fb395637004fc9fe9736f0bba94cdd71db21",
+  "gates": {
+    "integrity": {
+      "status": "PASS",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [],
+      "details": {
+        "lockedAt": "2026-11-01T12:44:23.815Z",
+        "protectedFileCount": 27
+      },
+      "durationMs": 86
+    },
+    "static": {
+      "status": "PASS",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [],
+      "durationMs": 22
+    },
+    "secrets": {
+      "status": "PASS",
+      "command": "regex secret scan + git ls-files .env check",
+      "findings": [],
+      "durationMs": 462
+    },
+    "lint": {
+      "status": "PASS",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [],
+      "stdout": "[{\"filePath\":\"C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js\",\"messages\":[],\"suppressedMessages\":[],\"errorCount\":0,\"fatalErrorCount\":0,\"warningCount\":0,\"fixableErrorCount\":0,\"fixableWarningCount\":0,\"usedDeprecatedRules\":[]}]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 1
+      },
+      "durationMs": 7281
+    },
+    "security": {
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "NO_FILES_CHECKED",
+          "message": "security gate checked 0 files. src/ must contain JavaScript files."
+        }
+      ],
+      "stdout": "[]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 0
+      },
+      "durationMs": 2422
+    },
+    "tests": {
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "tests\\\\cli.test.js :: --- | duration_ms: 217.6505 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:1:1' | failureType: 'testCodeFailure' | exitCode: 1 | signal: ~ | error: 'test failed' | code: 'ERR_TEST_FAILURE' | ..."
+        }
+      ],
+      "stdout": "TAP version 13\n# node:internal/modules/cjs/loader:1607\n#   throw err;\n#   ^\n# Error: Cannot find module '../src/cli'\n# Require stack:\n# - C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js\n#     at Module._resolveFilename (node:internal/modules/cjs/loader:1603:15)\n#     at wrapResolveFilename (node:internal/modules/cjs/loader:1145:27)\n#     at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1169:10)\n#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1196:12)\n#     at Module._load (node:internal/modules/cjs/loader:1370:5)\n#     at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n#     at Module.require (node:internal/modules/cjs/loader:1713:12)\n#     at require (node:internal/modules/helpers:318:16)\n#     at Object.<anonymous> (C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:9:18)\n#     at Module._compile (node:internal/modules/cjs/loader:1968:14) {\n#   code: 'MODULE_NOT_FOUND',\n#   requireStack: [\n#     'C:\\\\\\\\Users\\\\\\\\my pc\\\\\\\\3D Objects\\\\\\\\AISDLC ASSIGNMENT\\\\\\\\AI-SDLC-ASSIGNMENT\\\\\\\\Part-1A\\\\\\\\tests\\\\\\\\cli.test.js'\n#   ]\n# }\n# Node.js v26.13.0\n# Subtest: tests\\\\cli.test.js\nnot ok 1 - tests\\\\cli.test.js\n  ---\n  duration_ms: 217.6505\n  type: 'test'\n  location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:1:1'\n  failureType: 'testCodeFailure'\n  exitCode: 1\n  signal: ~\n  error: 'test failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 248.878\n----------|---------|----------|---------|---------|-------------------\nFile      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \n----------|---------|----------|---------|---------|-------------------\nAll files |       0 |        0 |       0 |       0 |                   \n----------|---------|----------|---------|---------|-------------------\n",
+      "stderr": "",
+      "details": {
+        "lineCoveragePercent": "Unknown",
+        "testFiles": 1
+      },
+      "durationMs": 4365
+    }
+  }
+}

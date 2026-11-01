@@ -1,0 +1,70 @@
+{
+  "label": "dev-red2",
+  "timestamp": "2026-11-01T12:18:24.291Z",
+  "overall": "FAIL",
+  "node": "v26.13.0",
+  "gitCommit": "cc57134",
+  "lockedBaselineSha256": "718c7253ad6933a297c18cfdbf8110bf117ecbb178bed7b9ebd369a57f780c07",
+  "gates": {
+    "integrity": {
+      "status": "PASS",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [],
+      "details": {
+        "lockedAt": "2026-11-01T12:18:16.851Z",
+        "protectedFileCount": 25
+      },
+      "durationMs": 50
+    },
+    "static": {
+      "status": "FAIL",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [
+        {
+          "code": "RUNTIME_DEPENDENCY",
+          "message": "Runtime dependencies are not allowed (Node built-ins only): express"
+        }
+      ],
+      "durationMs": 18
+    },
+    "secrets": {
+      "status": "PASS",
+      "command": "regex secret scan + git ls-files .env check",
+      "findings": [],
+      "durationMs": 236
+    },
+    "lint": {
+      "status": "ERROR",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ],
+      "durationMs": 1
+    },
+    "security": {
+      "status": "ERROR",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ],
+      "durationMs": 0
+    },
+    "tests": {
+      "status": "ERROR",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "c8 is not installed. Run `npm install`."
+        }
+      ],
+      "durationMs": 2
+    }
+  }
+}

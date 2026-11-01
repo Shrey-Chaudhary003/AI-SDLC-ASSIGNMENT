@@ -1,0 +1,78 @@
+{
+  "label": "dev-red3",
+  "timestamp": "2026-11-01T12:20:35.306Z",
+  "overall": "FAIL",
+  "node": "v26.13.0",
+  "gitCommit": "cc57134",
+  "lockedBaselineSha256": "718c7253ad6933a297c18cfdbf8110bf117ecbb178bed7b9ebd369a57f780c07",
+  "gates": {
+    "integrity": {
+      "status": "PASS",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [],
+      "details": {
+        "lockedAt": "2026-11-01T12:18:16.851Z",
+        "protectedFileCount": 25
+      },
+      "durationMs": 48
+    },
+    "static": {
+      "status": "PASS",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [],
+      "durationMs": 14
+    },
+    "secrets": {
+      "status": "PASS",
+      "command": "regex secret scan + git ls-files .env check",
+      "findings": [],
+      "durationMs": 226
+    },
+    "lint": {
+      "status": "ERROR",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "TOOL_CRASH",
+          "message": "ESLint did not return JSON (exit 2). "
+        }
+      ],
+      "stdout": "",
+      "stderr": "\nOops! Something went wrong! :(\n\nESLint: 9.39.5\n\nError: ENOENT: no such file or directory, stat 'C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\eslint.config.js'\n    at async Object.stat (node:internal/fs/promises:1908:18)\n    at async loadConfigFile (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\config\\config-loader.js:206:17)\n    at async ConfigLoader.calculateConfigArray (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\config\\config-loader.js:589:23)\n    at async #calculateConfigArray (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\config\\config-loader.js:743:23)\n    at async entryFilter (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\eslint\\eslint-helpers.js:322:5)\n    at async NodeHfs.<anonymous> (file:///C:/Users/my%20pc/3D%20Objects/AISDLC%20ASSIGNMENT/AI-SDLC-ASSIGNMENT/Part-1A/node_modules/@humanfs/core/src/hfs.js:574:24)\n    at async NodeHfs.walk (file:///C:/Users/my%20pc/3D%20Objects/AISDLC%20ASSIGNMENT/AI-SDLC-ASSIGNMENT/Part-1A/node_modules/@humanfs/core/src/hfs.js:614:3)\n    at async globSearch (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\eslint\\eslint-helpers.js:364:20)\n    at async Promise.allSettled (index 0)\n    at async globMultiSearch (C:\\Users\\my pc\\3D Objects\\AISDLC ASSIGNMENT\\AI-SDLC-ASSIGNMENT\\Part-1A\\node_modules\\eslint\\lib\\eslint\\eslint-helpers.js:455:18)\n",
+      "durationMs": 2111
+    },
+    "security": {
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "NO_FILES_CHECKED",
+          "message": "security gate checked 0 files. src/ must contain JavaScript files."
+        }
+      ],
+      "stdout": "[]\n",
+      "stderr": "",
+      "details": {
+        "filesChecked": 0
+      },
+      "durationMs": 1084
+    },
+    "tests": {
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "tests\\\\cli.test.js :: --- | duration_ms: 242.4956 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:1:1' | failureType: 'testCodeFailure' | exitCode: 1 | signal: ~ | error: 'test failed' | code: 'ERR_TEST_FAILURE' | ..."
+        }
+      ],
+      "stdout": "TAP version 13\n# node:internal/modules/cjs/loader:1607\n#   throw err;\n#   ^\n# Error: Cannot find module '../src/cli'\n# Require stack:\n# - C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js\n#     at Module._resolveFilename (node:internal/modules/cjs/loader:1603:15)\n#     at wrapResolveFilename (node:internal/modules/cjs/loader:1145:27)\n#     at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1169:10)\n#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1196:12)\n#     at Module._load (node:internal/modules/cjs/loader:1370:5)\n#     at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n#     at Module.require (node:internal/modules/cjs/loader:1713:12)\n#     at require (node:internal/modules/helpers:318:16)\n#     at Object.<anonymous> (C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:9:18)\n#     at Module._compile (node:internal/modules/cjs/loader:1968:14) {\n#   code: 'MODULE_NOT_FOUND',\n#   requireStack: [\n#     'C:\\\\\\\\Users\\\\\\\\my pc\\\\\\\\3D Objects\\\\\\\\AISDLC ASSIGNMENT\\\\\\\\AI-SDLC-ASSIGNMENT\\\\\\\\Part-1A\\\\\\\\tests\\\\\\\\cli.test.js'\n#   ]\n# }\n# Node.js v26.13.0\n# Subtest: tests\\\\cli.test.js\nnot ok 1 - tests\\\\cli.test.js\n  ---\n  duration_ms: 242.4956\n  type: 'test'\n  location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:1:1'\n  failureType: 'testCodeFailure'\n  exitCode: 1\n  signal: ~\n  error: 'test failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 275.422\n----------|---------|----------|---------|---------|-------------------\nFile      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \n----------|---------|----------|---------|---------|-------------------\nAll files |       0 |        0 |       0 |       0 |                   \n----------|---------|----------|---------|---------|-------------------\n",
+      "stderr": "",
+      "details": {
+        "lineCoveragePercent": "Unknown",
+        "testFiles": 1
+      },
+      "durationMs": 1197
+    }
+  }
+}

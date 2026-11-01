@@ -1,0 +1,50 @@
+{
+  "label": "dev-red2",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "static",
+      "status": "FAIL",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [
+        {
+          "code": "RUNTIME_DEPENDENCY",
+          "message": "Runtime dependencies are not allowed (Node built-ins only): express"
+        }
+      ]
+    },
+    {
+      "gate": "lint",
+      "status": "ERROR",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ]
+    },
+    {
+      "gate": "security",
+      "status": "ERROR",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "ERROR",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "c8 is not installed. Run `npm install`."
+        }
+      ]
+    }
+  ]
+}

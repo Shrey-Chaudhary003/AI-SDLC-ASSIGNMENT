@@ -1,0 +1,28 @@
+{
+  "label": "dev-red5",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "security",
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "NO_FILES_CHECKED",
+          "message": "security gate checked 0 files. src/ must contain JavaScript files."
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "FAIL",
+      "command": "c8 --check-coverage --lines 90 node --test 1 file(s)",
+      "findings": [
+        {
+          "code": "TEST_FAILED",
+          "message": "tests\\\\cli.test.js :: --- | duration_ms: 217.6505 | type: 'test' | location: 'C:\\\\Users\\\\my pc\\\\3D Objects\\\\AISDLC ASSIGNMENT\\\\AI-SDLC-ASSIGNMENT\\\\Part-1A\\\\tests\\\\cli.test.js:1:1' | failureType: 'testCodeFailure' | exitCode: 1 | signal: ~ | error: 'test failed' | code: 'ERR_TEST_FAILURE' | ..."
+        }
+      ]
+    }
+  ]
+}

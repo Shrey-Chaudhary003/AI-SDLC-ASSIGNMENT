@@ -1,0 +1,269 @@
+{
+  "label": "dev-red",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "integrity",
+      "status": "FAIL",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [
+        {
+          "code": "NO_BASELINE",
+          "message": "No .harness/manifest.json. Run `npm run harness:lock -- --reason \"baseline before implement\"` after tests and harness are committed."
+        }
+      ]
+    },
+    {
+      "gate": "static",
+      "status": "FAIL",
+      "command": "static sensor (suppressions, weak tests, AC traceability, dependencies)",
+      "findings": [
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-001 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-002 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-003 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-004 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-005 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-006 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-007 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-008 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-009 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-010 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-011 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-012 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-013 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-014 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-015 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-016 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-017 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-018 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-019 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-020 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-021 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-022 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-023 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-024 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-025 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-026 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-027 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-028 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-029 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-030 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-031 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-032 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-033 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-034 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-035 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-036 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-037 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-038 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-039 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-040 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-041 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-042 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-043 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-044 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-045 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-046 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-047 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-048 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-049 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-050 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-051 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "AC_WITHOUT_TEST",
+          "message": "AC-052 is in the spec but no test title mentions it."
+        },
+        {
+          "code": "RUNTIME_DEPENDENCY",
+          "message": "Runtime dependencies are not allowed (Node built-ins only): express"
+        }
+      ]
+    },
+    {
+      "gate": "lint",
+      "status": "ERROR",
+      "command": "eslint --config eslint.config.js --max-warnings 0 src tests",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ]
+    },
+    {
+      "gate": "security",
+      "status": "ERROR",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "TOOL_MISSING",
+          "message": "eslint is not installed. Run `npm install` in this folder."
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "SKIPPED",
+      "command": "node --test",
+      "findings": [
+        {
+          "code": "SKIPPED_INTEGRITY_FAILED",
+          "message": "Dynamic checks skipped until protected-file findings are resolved (same rule as Lab Sheet 2)."
+        }
+      ]
+    }
+  ]
+}

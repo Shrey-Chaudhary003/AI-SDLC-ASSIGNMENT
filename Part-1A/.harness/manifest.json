@@ -1,0 +1,33 @@
+{
+  "lockedAt": "2026-11-01T12:44:23.815Z",
+  "reason": "baseline before implement, added eslint configs",
+  "files": {
+    ".harness/gates/integrity.js": "f244cf1288a6a7d8a1beeba28b1a4ce63ef8c243b7173453d03b9f7b1e2d38db",
+    ".harness/gates/lint.js": "2e5a7e1de667756178aa61af6f3a418e7c9fc192430bf4afb98005ebc609a518",
+    ".harness/gates/secrets.js": "452d731f0963aba84edf4d4f474e3d147d092a60ae3bea3ca95269ee862b5726",
+    ".harness/gates/security.js": "1d2e0bac37c3ea0c4df374e6256dc7b2ed6c873e23d7d40642fed87e5d764689",
+    ".harness/gates/static.js": "82011a443afda5c7459fb0c71cbe6f306c356bed1a16ae90e68d75daf5651539",
+    ".harness/gates/tests.js": "305ba616e47c0908ffd5a55c5240a1a27e85033638a5580f8929ce6c62bfce35",
+    ".harness/harness-config.json": "1e60b21e1f6df784324fb17f9ddcc9a23177d808b888e87f378f3d27b90e332f",
+    ".harness/harness-rules.md": "720927a38b3f98085f357b35ec9b1c5daaf95526ff83ce43d43e21e49d91af4a",
+    ".harness/lib/manifest.js": "bf0994be4cc404bf3a1a7a12fd16fa0f456a4713f14e0400fda97dae44a4d18a",
+    ".harness/lib/util.js": "afe661763f34af72f49a31dd1f693d559e60da8f04bbe24ff586925a7b32c9ad",
+    ".harness/lock.js": "c3f32ab915fedbce1968fbba70decca4775b68a84673e4357c58133288ba9638",
+    ".harness/repair-prompt.md": "cb6d0b082e6e37fd7797e178ad631a0b9cc1cdb3a5ef250f77c9aab87a910e4d",
+    ".harness/run-harness.js": "175be0db5b0bc6cd04564fca3f4e20b7efde79ef07212063efeca6898a23d479",
+    ".harness/selftest.js": "8be56640c0f7d6abc2214a2ca83d5bb439509766c74244c9d810db024e899bb4",
+    ".harness/snapshot.js": "b2e41e2cad2bf43c324f5b2c8df8cdccc3c1dc04d20f73b8893f437f514c08bf",
+    ".specify/memory/constitution.md": "8daa06fa564e6145c699c1fffac0e387ac1b9ef372280aadcb37a7c7b6f22a86",
+    "eslint.config.js": "ada35ceec9e1f0343529cceb4fdcc743117dd257300dbddae83fbcec8cc5d332",
+    "eslint.security.config.js": "2b6a2d481835b7123d76213858bff0d6f74d5db1cf4d3e78ffdc7393a2d357b0",
+    "specs/001-smart-todo-cli/checklists/requirements.md": "6005fddc84d3d03c27ccfcfd03f0bb7e402d8f7cc1dc90434fdf5939ff8fa8ba",
+    "specs/001-smart-todo-cli/contracts/cli-contract.md": "01a936dc7502e639eb72098eabf4949805bfbe8a9090ad1d9c50a31a9ecb6d3d",
+    "specs/001-smart-todo-cli/data-model.md": "55dc13fdccce095cffb3cbf234f1c6cd9861fe12b4ee0695f8c175f34fa4f5a2",
+    "specs/001-smart-todo-cli/plan.md": "49e0e756528a6438dc323429e20a5d161c75019ac29d03905454559c1acca2ed",
+    "specs/001-smart-todo-cli/quickstart.md": "3c43816c1210b3dee31c5c3cd6122066afb25b399b3404cdaf6bf88fe8fdff86",
+    "specs/001-smart-todo-cli/research.md": "af653df9693cd4d5cfeadbdbfa1060d7c6e3426d09a5f97e7e3d6400b381722d",
+    "specs/001-smart-todo-cli/spec.md": "48968fe9e461e7d5df68edb7c94ef651dac135ed12d71af5edea86a905be9432",
+    "specs/001-smart-todo-cli/tasks.md": "540b4a2e45b02cdb9e4eff5f24792dd2131dd83286f736680ebceaf7431f6d91",
+    "tests/cli.test.js": "a7ddbb5cbe2d7d369c1c4b6833550205a576a198ca8b1bfd3e4d03b488722ea2"
+  }
+}

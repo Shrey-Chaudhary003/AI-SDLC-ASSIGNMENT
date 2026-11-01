@@ -1,0 +1,45 @@
+{
+  "label": "dev-red4",
+  "overall": "FAIL",
+  "failingGates": [
+    {
+      "gate": "integrity",
+      "status": "FAIL",
+      "command": "compare protected files with .harness/manifest.json",
+      "findings": [
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "eslint.config.js",
+          "message": "eslint.config.js was added after the baseline was locked."
+        },
+        {
+          "code": "PROTECTED_FILE_ADDED",
+          "file": "eslint.security.config.js",
+          "message": "eslint.security.config.js was added after the baseline was locked."
+        }
+      ]
+    },
+    {
+      "gate": "security",
+      "status": "FAIL",
+      "command": "eslint --config eslint.security.config.js --max-warnings 0 src",
+      "findings": [
+        {
+          "code": "NO_FILES_CHECKED",
+          "message": "security gate checked 0 files. src/ must contain JavaScript files."
+        }
+      ]
+    },
+    {
+      "gate": "tests",
+      "status": "SKIPPED",
+      "command": "node --test",
+      "findings": [
+        {
+          "code": "SKIPPED_INTEGRITY_FAILED",
+          "message": "Dynamic checks skipped until protected-file findings are resolved (same rule as Lab Sheet 2)."
+        }
+      ]
+    }
+  ]
+}
