@@ -1,9 +1,11 @@
 <!--
 Sync Impact Report
-Version change: 3.0.0 -> 3.1.0
-Modified principles: Principle VII, Coding-Agent Boundaries, now permits
-  explicitly requested /speckit-clarify updates to the active feature spec
-Added sections: /speckit-clarify exception to Principle VII for spec and dated history updates
+Version change: 3.2.0 -> 3.3.0
+Modified principles: Principle V, allowing the real clock only in the
+  composition root; Principle VII, allowing explicitly requested plan artifacts
+  and specification alignment
+Added sections: clarified composition-root exception and /speckit-plan artifact
+  scope
 Removed sections: none
 Follow-up TODOs: none
 -->
@@ -39,11 +41,13 @@ and output assertions MUST check exact values with assertions such as
 `assert.strictEqual` and `assert.deepStrictEqual`; ranges are forbidden.
 
 ### V. Deterministic Dependencies
-Modules under `src/` MUST NOT call `Date`, `Math.random`, or `crypto` directly.
-The clock, ID generator, storage path, stdout, and stderr MUST be injected
-through a `deps` object. Exactly one composition-root function MAY construct the
-real dependencies. The same input and dependency state MUST produce the same
-output.
+Modules under `src/` MUST NOT call `Date`, `Math.random`, or `crypto` directly,
+except that the single composition-root function MAY call `new Date()` to
+construct the injected real clock. The clock, ID generator, storage path,
+stdout, and stderr MUST be injected through a `deps` object. Exactly one
+composition-root function MAY construct the real dependencies. All other
+source modules MUST use only the injected clock and ID generator. The same
+input and dependency state MUST produce the same output.
 
 ### VI. Built-In Runtime Dependencies
 The application MUST use Node.js CommonJS and JSON-file persistence. It MUST
@@ -57,10 +61,17 @@ update the single requested feature's `spec.md` under `specs/<feature>/` and
 the required `.specify/feature.json` path metadata. When explicitly invoked by
 the user, `/speckit-clarify` MAY update the active feature's `spec.md` by
 recording answers in its `Clarifications` section and dated `Change History`.
-These exceptions MUST NOT authorize changes to other files under `specs/`. A
+When explicitly invoked by the user, `/speckit-plan` MAY create or update only
+the active feature's `plan.md`, `research.md`, `data-model.md`, `quickstart.md`,
+`contracts/cli-contract.md`, and `spec.md` entries in `Clarifications` and
+`Change History` needed to align that specification with the approved plan and
+contract. The `/speckit-plan` exception MAY also update the active feature's
+`Functional Requirements`, `Acceptance Criteria`, `Assumptions`,
+`Success Criteria`, `Clarifications`, and `Change History` sections as needed
+to align the specification with the approved plan and contract. These
+exceptions MUST NOT authorize changes to any other files under `specs/`. A
 coding agent MUST NOT create, edit, rename, or delete files in `tests/`,
-`.harness/`,
-`.specify/memory/constitution.md`, `eslint.config.js`, or
+`.harness/`, `.specify/memory/constitution.md`, `eslint.config.js`, or
 `eslint.security.config.js`, except an explicit user-requested constitution
 amendment. It MUST NOT add suppression comments such as `eslint-disable`,
 `c8 ignore`, or `nosec`, skip or weaken a test, or lower a quality threshold.
@@ -102,4 +113,4 @@ non-semantic edits. Reviews MUST verify compliance with every applicable
 principle. A human MUST record the final ACCEPT or REJECT decision and known
 limitations after a harness PASS.
 
-**Version**: 3.1.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 3.3.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
