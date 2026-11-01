@@ -1,0 +1,25 @@
+{
+  "threshold": 0.85,
+  "weights": { "datetime_match": 0.5, "title_similarity": 0.3, "intent_correct": 0.2 },
+  "datetime_tolerance_minutes": 5,
+  "far_future_years": 5,
+  "prompt_leak_window_words": 10,
+  "service_retries": 3,
+  "service_backoff_ms": 2000,
+  "case_timeout_ms": 60000,
+  "default_delay_ms": 4000,
+  "min_cases": 15,
+  "min_categories": 6,
+  "title_stopwords": ["a", "an", "the", "to", "my", "me", "please", "remind", "reminder", "about", "that", "i"],
+  "requirement_map": {
+    "layer1_schema": ["FR-001", "SI-001", "SI-002", "SI-003"],
+    "datetime_real_calendar_date": ["SI-004"],
+    "datetime_future_for_create_reschedule": ["SI-005", "GR-006"],
+    "datetime_within_horizon": ["GR-004"],
+    "create_has_title": ["BP-002"],
+    "snooze_minutes_positive": ["BP-003"],
+    "clarify_fields_consistent": ["BP-001", "BP-006"],
+    "reject_has_no_datetime": ["GR-001"],
+    "no_prompt_leak": ["GR-002"]
+  }
+}

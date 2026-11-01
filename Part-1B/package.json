@@ -1,0 +1,17 @@
+{
+  "name": "part-1b",
+  "version": "1.0.0",
+  "description": "Part 1B - Natural Language Reminder Agent",
+  "main": "index.js",
+"scripts": {
+    "agent": "node src/cli.js",
+    "api:check": "node .harness/check-api.js",
+    "eval": "node .harness/run-eval.js",
+    "harness:lock": "node .harness/lock.js",
+    "harness:snapshot": "node .harness/snapshot.js",
+    "harness:selftest": "node .harness/selftest.js",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "type": "commonjs"
+}

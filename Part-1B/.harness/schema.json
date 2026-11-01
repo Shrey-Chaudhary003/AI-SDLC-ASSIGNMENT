@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReminderAgentOutput",
+  "description": "Output schema contract (FR-001, SI-002, SI-003, SI-004). Align with the Output Schema Contract section of your spec.md BEFORE locking.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent", "title", "datetime", "snooze_minutes", "needs_clarification", "clarification_question", "reason"],
+  "properties": {
+    "intent": { "type": "string", "enum": ["create", "reschedule", "snooze", "clarify", "reject"] },
+    "title": { "type": ["string", "null"], "maxLength": 200 },
+    "datetime": {
+      "type": ["string", "null"],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "snooze_minutes": { "type": ["integer", "null"] },
+    "needs_clarification": { "type": "boolean" },
+    "clarification_question": { "type": ["string", "null"], "maxLength": 300 },
+    "reason": { "type": "string", "minLength": 1, "maxLength": 300 }
+  }
+}
