@@ -166,6 +166,21 @@ The evaluation dataset contains at least 15 cases across at least 6 categories. 
 - **AC-019 (dataset traceability)**: **Given** the evaluation dataset is prepared for evaluation, **When** its manifest and cases are checked, **Then** it contains at least 15 cases in at least 6 categories, every case lists its exercised requirement IDs, and every listed ID is defined in this specification.
 - **AC-020 (evaluation gates)**: **Given** the declared evaluation formula and threshold, **When** a final evaluation is run, **Then** PASS requires Layer 1 and Layer 2 at 100 percent and mean Layer 3 at least 0.85, while any service errors produce INCOMPLETE and never PASS; the formula and threshold remain unchanged.
 
+## Clarifications
+
+These decisions resolve behavior and evaluation ambiguities. They do not change the FR, SI, BP, or GR requirements, the Output Schema Contract, or the declared Evaluation Threshold.
+
+1. **Ambiguous time (BP-001, BP-006)**: Clarify open-ended phrases such as `later`, `soon`, `next week`, and standalone `evening`, as well as incomplete date/time requests such as a weekday without a time or a time without a date. Resolve only requests with enough information under the explicit daypart rules below; do not invent missing information.
+2. **Daypart defaults (BP-001, BP-006)**: Interpret `tonight` and `this evening` as 8:00 PM in the supplied timezone, and `morning` as 9:00 AM in the supplied timezone. Standalone `evening` and a bare weekday such as `Friday` require clarification.
+3. **Month-end and elapsed times (BP-001, BP-004, BP-006, GR-006)**: `Last day of this month` means the last local calendar day of the current month in the supplied timezone. Ask for clarification if no time is supplied or if the requested time has already passed. Never roll a past time forward to tomorrow or another date; clarify instead.
+4. **Reschedule identity (BP-005)**: The agent is stateless and uses the reminder title stated in the request as its identifier; it does not look up or claim a match in a stored reminder list. If the title is missing, ambiguous, or cannot be identified, return `clarify` with `datetime: null` and ask for the exact reminder title.
+5. **Snooze conversion (BP-003)**: Convert durations exactly to whole minutes: `10 min` is 10, `an hour` is 60, `half an hour` is 30, and `1.5 hours` is 90. If a duration does not convert to an exact whole number of minutes, ask for clarification rather than rounding.
+6. **Mixed requests (GR-005)**: Process only the reminder clause when it is sufficiently specified; ignore extra commands and exclude them from the title. If the reminder clause is missing required information, clarify that clause instead of processing the extra command.
+7. **Language support (FR-002)**: Accept non-English and mixed-language requests without translation or language-based rejection. The API text length limit is specified separately below.
+8. **Gibberish and injection (GR-001, GR-003)**: Clarify gibberish input. Reject an input consisting solely of an injection attempt with `datetime: null`. If an injection is mixed with a valid reminder, ignore the injected instructions and process only the reminder request.
+9. **Parse API input validation (AP-002, AP-003)**: Limit `text` to 8,000 Unicode code points, in addition to the 10 KB JSON request-body limit; exceeding either limit returns HTTP 400. If `timezone` is omitted, use `Asia/Kolkata`; an invalid IANA timezone or invalid offset-bearing ISO-8601 `nowIso` returns HTTP 400. When `nowIso` is omitted, the server supplies it as specified in AP-002.
+10. **Frontend error display (AP-003, AP-005, AP-006)**: Show distinct, clear messages and safe error codes for HTTP 502 invalid model JSON and HTTP 503 service errors. Do not display raw model text in the frontend. The 502 API response still includes `raw` as required by AP-003; the frontend displays only the safe message/code.
+
 ## Key Entities
 
 - **Parse request**: Free-text `text` plus a reference instant `nowIso` and IANA `timezone`.
@@ -186,3 +201,4 @@ The evaluation dataset contains at least 15 cases across at least 6 categories. 
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-01 | 1.0.0 | Initial specification. Recorded the requested Reminder Agent requirements, schema, delivery layer, evaluation formula and threshold, dataset traceability, and acceptance criteria before evaluation. |
+| 2026-11-01 | 1.0.1 | Recorded ten user-approved clarifications for time interpretation, rescheduling, snooze conversion, mixed and invalid inputs, API validation, and frontend error display. No FR/SI/BP/GR requirement, schema, or evaluation threshold was changed. |
