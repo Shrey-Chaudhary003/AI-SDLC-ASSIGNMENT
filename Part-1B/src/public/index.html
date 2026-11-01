@@ -36,7 +36,14 @@
     .intent-reject { color: #8d1b25; background: #ffe0e2; }
     .check-pass { color: #075b32; background: #d8f5e5; }
     .check-fail { color: #8d1b25; background: #ffe0e2; }
-    .checks, .metadata { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .check-list { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+    .check-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; padding: .65rem .75rem; border: 1px solid #d8dfeb; border-radius: 8px; }
+    .check { display: inline-block; border-radius: 999px; padding: .2rem .65rem; font-size: .82rem; font-weight: 750; white-space: nowrap; }
+    .check-name { flex: 1 1 200px; line-height: 1.45; overflow-wrap: anywhere; }
+    .metadata-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; margin: 0; }
+    .metadata-item { margin: 0; padding: .75rem; background: #f5f7fb; border-radius: 8px; min-width: 0; }
+    .metadata-item dt { color: #536176; font-size: .85rem; font-weight: 650; }
+    .metadata-item dd { margin: .25rem 0 0; font-weight: 700; overflow-wrap: anywhere; }
     .field { margin: .85rem 0; }
     .field strong { display: block; }
     pre { overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: #f5f7fb; padding: 1rem; border-radius: 7px; }
@@ -85,9 +92,9 @@
       <div class="field"><strong>Clarification question</strong><span id="question-view"></span></div>
       <div class="field"><strong>Reason</strong><span id="reason-view"></span></div>
       <h3>Validation checks</h3>
-      <div id="checks-view" class="checks"></div>
+      <ul id="checks-view" class="check-list" aria-label="Validation check results"></ul>
       <h3>Request metadata</h3>
-      <div id="metadata-view" class="metadata"></div>
+      <dl id="metadata-view" class="metadata-grid"></dl>
       <h3>Raw JSON</h3>
       <pre id="raw-json"></pre>
     </section>
@@ -150,10 +157,16 @@
       const target = document.getElementById('checks-view');
       target.replaceChildren();
       for (const check of checks) {
+        const row = document.createElement('li');
+        row.className = 'check-row';
+        appendText(row, 'code', check.id);
         const badge = document.createElement('span');
         badge.className = `check ${check.pass ? 'check-pass' : 'check-fail'}`;
-        badge.textContent = `${check.pass ? 'PASS' : 'FAIL'} ${check.id}: ${check.name}`;
-        target.appendChild(badge);
+        badge.textContent = check.pass ? 'PASS' : 'FAIL';
+        badge.setAttribute('aria-label', check.pass ? 'Passed' : 'Failed');
+        row.appendChild(badge);
+        appendText(row, 'span', check.name, 'check-name');
+        target.appendChild(row);
       }
     }
 
@@ -165,7 +178,11 @@
         ['Model', meta.model],
         ['Latency', `${meta.latencyMs} ms`],
       ]) {
-        appendText(target, 'span', `${label}: ${value}`);
+        const item = document.createElement('div');
+        item.className = 'metadata-item';
+        appendText(item, 'dt', label);
+        appendText(item, 'dd', value);
+        target.appendChild(item);
       }
     }
 

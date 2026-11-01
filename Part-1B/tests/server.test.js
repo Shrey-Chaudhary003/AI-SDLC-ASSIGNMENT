@@ -181,6 +181,9 @@ test('frontend contains five examples, keeps output text-safe, and keeps history
   const htmlPath = path.resolve(__dirname, '..', 'src', 'public', 'index.html');
   const html = fs.readFileSync(htmlPath, 'utf8');
   assert.equal((html.match(/data-example=/gu) || []).length >= 5, true);
+  assert.match(html, /id="checks-view" class="check-list"/u);
+  assert.match(html, /id="metadata-view" class="metadata-grid"/u);
+  assert.match(html, /badge\.textContent = check\.pass \? 'PASS' : 'FAIL'/u);
   assert.match(html, /textContent/u);
   assert.match(html, /history\.length = Math\.min\(history\.length, 10\)/u);
   assert.doesNotMatch(html, /\.innerHTML\s*=/u);
