@@ -1,11 +1,9 @@
 <!--
 Sync Impact Report
-Version change: 3.2.0 -> 3.3.0
-Modified principles: Principle V, allowing the real clock only in the
-  composition root; Principle VII, allowing explicitly requested plan artifacts
-  and specification alignment
-Added sections: clarified composition-root exception and /speckit-plan artifact
-  scope
+Version change: 3.4.0 -> 3.5.0
+Modified principles: Principle VII, allowing explicitly requested
+  specification-checklist artifacts for the active feature
+Added sections: narrow /speckit-checklist artifact scope
 Removed sections: none
 Follow-up TODOs: none
 -->
@@ -69,12 +67,20 @@ contract. The `/speckit-plan` exception MAY also update the active feature's
 `Functional Requirements`, `Acceptance Criteria`, `Assumptions`,
 `Success Criteria`, `Clarifications`, and `Change History` sections as needed
 to align the specification with the approved plan and contract. These
-exceptions MUST NOT authorize changes to any other files under `specs/`. A
-coding agent MUST NOT create, edit, rename, or delete files in `tests/`,
-`.harness/`, `.specify/memory/constitution.md`, `eslint.config.js`, or
+exceptions MUST NOT authorize changes to any other files under `specs/`.
+When explicitly invoked by the user, `/speckit-tasks` MAY create or update
+only `tasks.md` for the active feature. Its tasks MUST be implementation-only,
+reference the applicable FR/AC IDs and human-owned test files, and MUST NOT
+create or modify tests or harness files. A coding agent MUST NOT create, edit,
+rename, or delete files in `tests/`, `.harness/`,
+`.specify/memory/constitution.md`, `eslint.config.js`, or
 `eslint.security.config.js`, except an explicit user-requested constitution
 amendment. It MUST NOT add suppression comments such as `eslint-disable`,
 `c8 ignore`, or `nosec`, skip or weaken a test, or lower a quality threshold.
+When explicitly invoked by the user, `/speckit-checklist` MAY create or update
+only `checklists/requirements.md` for the active feature. This artifact MUST
+evaluate specification quality without changing requirements, acceptance
+criteria, tests, or harness files.
 
 ### VIII. Implementation Evidence and Repairs
 The first generated implementation MUST be preserved before any repair. No
@@ -113,4 +119,4 @@ non-semantic edits. Reviews MUST verify compliance with every applicable
 principle. A human MUST record the final ACCEPT or REJECT decision and known
 limitations after a harness PASS.
 
-**Version**: 3.3.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 3.5.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
