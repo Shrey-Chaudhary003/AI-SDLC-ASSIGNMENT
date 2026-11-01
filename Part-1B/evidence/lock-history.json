@@ -1,0 +1,45 @@
+[
+  {
+    "lockedAt": "2026-11-01T18:06:08.492Z",
+    "reason": "baseline: dataset, schema, threshold and spec fixed before first evaluation",
+    "gitCommit": "4ae628e",
+    "fileCount": 24,
+    "added": [
+      ".harness/check-api.js",
+      ".harness/eval-config.json",
+      ".harness/harness-rules.md",
+      ".harness/layer1.js",
+      ".harness/layer2.js",
+      ".harness/layer3.js",
+      ".harness/lib/evaluate.js",
+      ".harness/lib/manifest.js",
+      ".harness/lib/schema-validate.js",
+      ".harness/lib/util.js",
+      ".harness/lock.js",
+      ".harness/repair-prompt.md",
+      ".harness/run-eval.js",
+      ".harness/schema.json",
+      ".harness/selftest.js",
+      ".harness/snapshot.js",
+      ".specify/memory/constitution.md",
+      "evals/dataset.json",
+      "specs/001-reminder-agent/data-model.md",
+      "specs/001-reminder-agent/plan.md",
+      "specs/001-reminder-agent/quickstart.md",
+      "specs/001-reminder-agent/research.md",
+      "specs/001-reminder-agent/spec.md",
+      "specs/001-reminder-agent/tasks.md"
+    ],
+    "removed": [],
+    "changed": []
+  },
+  {
+    "lockedAt": "2026-11-01T18:06:58.479Z",
+    "reason": "baseline: dataset, schema, threshold and spec fixed before first evaluation",
+    "gitCommit": "4ae628e",
+    "fileCount": 24,
+    "added": [],
+    "removed": [],
+    "changed": []
+  }
+]

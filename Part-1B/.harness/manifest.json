@@ -1,0 +1,30 @@
+{
+  "lockedAt": "2026-11-01T18:06:58.479Z",
+  "reason": "baseline: dataset, schema, threshold and spec fixed before first evaluation",
+  "files": {
+    ".harness/check-api.js": "fc81b5f5a505788e6672c457309527ced74356925612c230cc2c06866ceff4b3",
+    ".harness/eval-config.json": "3210da25397e3269e39ff94a3079b93bea32c4dfdfd3bcde92c845eb4a09f0c9",
+    ".harness/harness-rules.md": "2f7b2af033b0dc4c0b013bba33fd64a2c013c5c1775574226a920419b524857c",
+    ".harness/layer1.js": "2ea5c10ef3c6e9ea726f3ac1e784dd8798abf9cca92e0d81263d2c4b999c4a38",
+    ".harness/layer2.js": "64e2439f181158b850a39029ca11c87c2f0fa7566017a194c01a2176907cdb25",
+    ".harness/layer3.js": "b4c1f2542f7e01f04c12e40e9023dc36e2123d59e039c2363fb9e9f15cab100b",
+    ".harness/lib/evaluate.js": "95df597c65a132cb520b5aa10c363fc6b290d3a0a2a3956ad42521925da1534e",
+    ".harness/lib/manifest.js": "2bce61ea213b62f8bd8856e8679497c891eb81a67cbbcf24d40cf8015cc83177",
+    ".harness/lib/schema-validate.js": "d4bb0b00f750ad22731a18c3064ebed688650581db854685aee927fd2f9e7c42",
+    ".harness/lib/util.js": "0bc18562ecf6946ec41030dea9c13858d8c8beadcb4afbf461fde35ca971e907",
+    ".harness/lock.js": "091eb9a75ce7f82694ae824d7040196d2b89e3edc3661d10b82e2d26726d43b5",
+    ".harness/repair-prompt.md": "15b02db3babbb28c6df88bc65d1e97470e09d39c8b08b26d76d22181fee63a40",
+    ".harness/run-eval.js": "f075405b32424b7a50e09d847b8cb2299b7997946304db7740adfe26a88bc9c4",
+    ".harness/schema.json": "d27068a08be59e7b4c790bf63af6bd124979fdc677279ca5099408392f570b66",
+    ".harness/selftest.js": "d3f4fa8d621cf445c2e38608eaa95e91c25f336c9781e196c688a0d7edea71df",
+    ".harness/snapshot.js": "20368c34a7a94a538b9f6ab23fa3f82928a89908c94eef63c4def83078d49bff",
+    ".specify/memory/constitution.md": "249d9e707e0a65d3cd28bb5aca5b471fa8ed1e9971d79205f8049f3229929dfb",
+    "evals/dataset.json": "012e20bc13b0a9c7c1020cc7bd4afd036b7ec704490efb4ee8e02a842f938c04",
+    "specs/001-reminder-agent/data-model.md": "2cc7d530418c6f9f01dbf9f1e6a189f4a1ef736a08504c89fcbb0ea1bb6ba080",
+    "specs/001-reminder-agent/plan.md": "435bc1af004723471463d2ce702e6549ae69ff05788527ee168dbca43404f68a",
+    "specs/001-reminder-agent/quickstart.md": "953c16d4ab63544353754f26c50cf51ed067aa27502d7c924f392a69a35e696b",
+    "specs/001-reminder-agent/research.md": "7bce1479291d6cfbf5876d6e924ddfe174429b71ad58547c2229c7df472fd6b2",
+    "specs/001-reminder-agent/spec.md": "7ed207c5b160297ec5a6636cde25790912bdc46f383bda67d2620c1832096d41",
+    "specs/001-reminder-agent/tasks.md": "c846209860935c58d4c9b314ccf2c03cc665a8cd543eff51bfed7e140bc3c547"
+  }
+}

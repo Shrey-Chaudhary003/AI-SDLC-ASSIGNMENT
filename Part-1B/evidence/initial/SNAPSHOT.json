@@ -1,0 +1,15 @@
+{
+  "name": "initial",
+  "createdAt": "2026-11-01T18:18:33.075Z",
+  "gitCommit": "4ae628e",
+  "files": {
+    "src/agent.js": "90b432c7822fe81fc5137ed5f75d29f704195e1d5bf129a05005f3950ab3b238",
+    "src/cli.js": "b06773a06c0bfe68e1413ac8eebfe411f8c42ccd7c3e1007aafc78625bb9dbf9",
+    "src/env.js": "a62d2fb1a0587e5e4f52dc2be96583dbababee0c7bed178a9617cc168a3f8581",
+    "src/gemini-client.js": "f0579ad4b9508535fdbe18de83202420fb42d2cc08652dc57c049fb3939287d9",
+    "src/public/index.html": "09c96bdd51cc8f9e882d1214ddd7dbca8d5bb655afb6361c703a3cb45484e1a0",
+    "src/server.js": "a20d8f2cfe2676e58102aab3f6103f6d97e2e85d60f363115431ae9351bcc978",
+    "src/validate.js": "91228a677c369727c9cd843286fdb4fe95a69af017c2f0f4228fb4b69027aa9a",
+    "prompts/system-prompt.md": "41836b97a3b394c03676cd59bbdb339b80d3e107a62343e46cc104f599d89a98"
+  }
+}
