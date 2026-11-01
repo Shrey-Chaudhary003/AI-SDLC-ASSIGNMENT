@@ -34,7 +34,7 @@ The evaluation harness calls `src/agent.js` directly. Its dataset and hard/seman
 - `GEMINI_API_KEY`, `LLM_MODEL`, or the system prompt being unavailable is an explicit configuration failure.
 - Provider 429/503 are retried up to three total requests with growing delays (1 second, then 2 seconds); other 4xx responses are not retried. Other 5xx, exhausted retries, timeout, and network failures are `SERVICE_ERROR`.
 - Parsed JSON that fails schema/invariant validation is never changed or returned; it raises `INVALID_MODEL_OUTPUT`. The API returns HTTP 502 for this and `INVALID_MODEL_JSON`; raw error evidence is sanitized before any response and never rendered in the frontend.
-- The only permitted package-manifest edit is adding the `npm start` script, explicitly authorized by the user. No dependencies or other manifest fields may change.
+- Do not modify `package.json`; AP-001 launches the backend with `node src/server.js`.
 
 **Scale/Scope**: Single-process local tool; stateless reminder parsing; no reminder persistence, authentication, deployment, or public network binding.
 
@@ -46,12 +46,12 @@ The evaluation harness calls `src/agent.js` directly. Its dataset and hard/seman
 |---|---|---|
 | Specification and contract authority (BP-001–BP-003) | PASS | Implementation and tests trace to IDs in `spec.md` and `contracts/agent-contract.md`; unresolved behavior is recorded upstream before implementation. |
 | Exact model JSON and hard gates (SI-001–SI-005, AC-001–AC-002) | PASS | Parse without repair; non-mutating structural/invariant validation; the evaluation threshold and formula remain unchanged. |
-| File boundaries (GR-001–GR-004) | PASS with approved scope | Implementation under `src/` and `prompts/`; tests under `tests/` and only the `npm start` addition in `package.json` are explicitly authorized. Harness/evaluation/spec/constitution files remain protected from implementation changes. Plan artifacts and the requested contract are produced through the authorized specification workflow. |
+| File boundaries (GR-001–GR-004) | PASS with approved scope | Implementation tasks are limited to `src/` and `prompts/`. No task changes tests, harness/evaluation/specification artifacts, the constitution, or `package.json`. Plan artifacts and the requested contract are produced through the authorized specification workflow. |
 | Time, temperature, and dependencies (SI-003, GR-005, FR-002) | PASS | Inject reference time/timezone; temperature 0.1; CommonJS, built-ins and global fetch only. |
 | Secrets and service errors (GR-006, SI-004) | PASS | Environment/`.env` only; no key or request URL in logs; service errors are distinct from application failures. |
 | Evidence and approval (BP-004–BP-005, AC-003–AC-004) | PASS | Preserve original model text in private error evidence; maximum two evidence-driven repair attempts; final human decision records residual risks. |
 
-No constitution exception is required beyond the user-approved test path and single `npm start` script change recorded in the constitution.
+No implementation task changes files outside `src/` and `prompts/`.
 
 ## Design Decisions
 
@@ -101,7 +101,7 @@ tests/
 └── server.test.js
 ```
 
-`package.json` receives only the explicitly authorized `"start": "node src/server.js"` script. Its existing `test` script remains unchanged. Do not edit `.harness/`, `evals/`, `specs/`, or `.specify/memory/constitution.md` during implementation/evaluation.
+Do not edit `package.json`, `.harness/`, `evals/`, `specs/`, or `.specify/memory/constitution.md` during implementation/evaluation.
 
 **Structure Decision**: One Node.js project with a Gemini client behind a shared module, a small built-in HTTP server, one static HTML page, and built-in Node tests. No separate frontend/backend projects, dependencies, persistence layer, or general-purpose provider framework.
 

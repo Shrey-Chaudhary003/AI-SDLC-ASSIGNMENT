@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Node.js 20 or newer.
-- A provider account/key for manual model-backed runs. Unit tests do not require credentials or network access.
+- A Gemini account/key for manual model-backed runs. Unit tests do not require credentials or network access.
 - Set `LLM_MODEL` and `GEMINI_API_KEY` in the process environment or local `.env`. Gemini is the only supported provider. The loader does not overwrite existing process environment variables.
 
 Do not commit `.env` or paste provider keys into the browser.
@@ -19,7 +19,7 @@ All unit and local HTTP tests inject fake fetch/provider responses. They must no
 ## Local API and frontend
 
 ```powershell
-npm start
+node src/server.js
 ```
 
 The server binds to `127.0.0.1` on `PORT` or `3000`.
