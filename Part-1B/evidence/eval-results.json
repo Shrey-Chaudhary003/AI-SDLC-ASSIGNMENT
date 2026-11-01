@@ -1,0 +1,193 @@
+{
+  "label": "dev-try",
+  "timestamp": "2026-11-01T18:24:53.461Z",
+  "verdict": "PASS",
+  "node": "v26.13.0",
+  "gitCommit": "465c095",
+  "model": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "temperature": 0.1,
+    "note": "from agent.config"
+  },
+  "referenceNowValues": [
+    "2026-11-05T10:00:00+05:30"
+  ],
+  "fingerprints": {
+    "datasetSha256": "012e20bc13b0a9c7c1020cc7bd4afd036b7ec704490efb4ee8e02a842f938c04",
+    "evalConfigSha256": "3210da25397e3269e39ff94a3079b93bea32c4dfdfd3bcde92c845eb4a09f0c9",
+    "schemaSha256": "d27068a08be59e7b4c790bf63af6bd124979fdc677279ca5099408392f570b66",
+    "systemPromptSha256": "a91001e80a6ebbb6b5c8c10cc947ec1714e36ae6e79c0054a51dd407baffdccf"
+  },
+  "thresholdDeclared": {
+    "threshold": 0.85,
+    "weights": {
+      "datetime_match": 0.5,
+      "title_similarity": 0.3,
+      "intent_correct": 0.2
+    },
+    "datetimeToleranceMinutes": 5
+  },
+  "aggregate": {
+    "verdict": "PASS",
+    "totalCases": 3,
+    "evaluatedCases": 3,
+    "serviceErrorCases": 0,
+    "layer1": {
+      "passed": 3,
+      "rate": 1,
+      "required": 1
+    },
+    "layer2": {
+      "passed": 3,
+      "rate": 1,
+      "required": 1
+    },
+    "layer3": {
+      "meanAllEvaluated": 1,
+      "meanOverHardGatePassed": 1,
+      "threshold": 0.85,
+      "casesBelowThreshold": 0
+    },
+    "byCategory": {
+      "normal": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "ambiguous": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "far_future": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "EV-01",
+      "category": "normal",
+      "input": "Remind me to call mom tomorrow at 6pm",
+      "requirement_ids": [
+        "FR-002",
+        "BP-004",
+        "SI-004",
+        "SI-005"
+      ],
+      "status": "PASS",
+      "belowThreshold": false,
+      "attempts": 1,
+      "latencyMs": 1688,
+      "output": {
+        "intent": "create",
+        "title": "Call mom",
+        "datetime": "2026-11-06T18:00:00+05:30",
+        "snooze_minutes": null,
+        "needs_clarification": false,
+        "clarification_question": null,
+        "reason": "The task and future time are fully specified."
+      },
+      "layer1": {
+        "pass": true,
+        "errors": []
+      },
+      "layer2": {
+        "pass": true,
+        "checksRun": 7,
+        "failed": []
+      },
+      "layer3": {
+        "score": 1,
+        "components": {
+          "datetime_match": 1,
+          "title_similarity": 1,
+          "intent_correct": 1
+        }
+      },
+      "failedRequirements": []
+    },
+    {
+      "id": "EV-09",
+      "category": "ambiguous",
+      "input": "Remind me later",
+      "requirement_ids": [
+        "BP-006",
+        "BP-001"
+      ],
+      "status": "PASS",
+      "belowThreshold": false,
+      "attempts": 1,
+      "latencyMs": 1635,
+      "output": {
+        "intent": "clarify",
+        "title": null,
+        "datetime": null,
+        "snooze_minutes": null,
+        "needs_clarification": true,
+        "clarification_question": "What would you like to be reminded about and when?",
+        "reason": "The reminder lacks both the task details and the specific time."
+      },
+      "layer1": {
+        "pass": true,
+        "errors": []
+      },
+      "layer2": {
+        "pass": true,
+        "checksRun": 5,
+        "failed": []
+      },
+      "layer3": {
+        "score": 1,
+        "components": {
+          "datetime_match": 1,
+          "title_similarity": 1,
+          "intent_correct": 1
+        }
+      },
+      "failedRequirements": []
+    },
+    {
+      "id": "EV-17",
+      "category": "far_future",
+      "input": "Remind me in the year 2090 to renew passport",
+      "requirement_ids": [
+        "GR-004"
+      ],
+      "status": "PASS",
+      "belowThreshold": false,
+      "attempts": 1,
+      "latencyMs": 1277,
+      "output": {
+        "intent": "clarify",
+        "title": "renew passport",
+        "datetime": null,
+        "snooze_minutes": null,
+        "needs_clarification": true,
+        "clarification_question": "The requested date is more than five years in the future. Could you please specify a date within the next five years?",
+        "reason": "Requested date is beyond the five-year maximum limit, requiring clarification."
+      },
+      "layer1": {
+        "pass": true,
+        "errors": []
+      },
+      "layer2": {
+        "pass": true,
+        "checksRun": 5,
+        "failed": []
+      },
+      "layer3": {
+        "score": 1,
+        "components": {
+          "datetime_match": 1,
+          "title_similarity": 1,
+          "intent_correct": 1
+        }
+      },
+      "failedRequirements": []
+    }
+  ]
+}

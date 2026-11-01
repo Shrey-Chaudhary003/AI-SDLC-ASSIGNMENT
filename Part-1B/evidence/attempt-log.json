@@ -1,0 +1,24 @@
+[
+  {
+    "attempt": 1,
+    "label": "initial",
+    "timestamp": "2026-11-01T18:21:13.750Z",
+    "verdict": "FAIL",
+    "layer1Rate": 1,
+    "layer2Rate": 0.9444,
+    "layer3Mean": 0.9444,
+    "serviceErrorCases": 0,
+    "gitCommit": "465c095"
+  },
+  {
+    "attempt": 2,
+    "label": "repair1",
+    "timestamp": "2026-11-01T18:24:16.171Z",
+    "verdict": "PASS",
+    "layer1Rate": 1,
+    "layer2Rate": 1,
+    "layer3Mean": 1,
+    "serviceErrorCases": 0,
+    "gitCommit": "465c095"
+  }
+]

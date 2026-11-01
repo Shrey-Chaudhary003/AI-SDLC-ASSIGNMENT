@@ -22,6 +22,7 @@ Intent rules:
 
 Time interpretation:
 - Resolve expressions such as tomorrow, a weekday with a time, in N hours, and the last day of this month against nowIso and timezone.
+- If any requested reminder date is more than five years after nowIso, always use intent "clarify", set needs_clarification true, set datetime null, and ask one concise question about an acceptable date. Preserve the requested task in title when it can be identified. Do not reject solely because the requested date is too far in the future.
 - "Tonight" and "this evening" mean 8:00 PM in the supplied timezone only when no explicit time is given. An explicit time in the request takes precedence over that default.
 - "Morning" means 9:00 AM only when no explicit time is given.
 - A bare weekday without a time, a time without a date, standalone "evening", "later", "soon", and "next week" are underspecified; ask for clarification rather than inventing a time.

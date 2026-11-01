@@ -1,0 +1,130 @@
+{
+  "label": "initial",
+  "verdict": "FAIL",
+  "aggregate": {
+    "verdict": "FAIL",
+    "totalCases": 18,
+    "evaluatedCases": 18,
+    "serviceErrorCases": 0,
+    "layer1": {
+      "passed": 18,
+      "rate": 1,
+      "required": 1
+    },
+    "layer2": {
+      "passed": 17,
+      "rate": 0.9444,
+      "required": 1
+    },
+    "layer3": {
+      "meanAllEvaluated": 0.9444,
+      "meanOverHardGatePassed": 1,
+      "threshold": 0.85,
+      "casesBelowThreshold": 1
+    },
+    "byCategory": {
+      "normal": {
+        "cases": 4,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "boundary": {
+        "cases": 2,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "reschedule": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "snooze": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "ambiguous": {
+        "cases": 2,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "missing_info": {
+        "cases": 2,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "malformed": {
+        "cases": 2,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "adversarial": {
+        "cases": 2,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      },
+      "far_future": {
+        "cases": 1,
+        "hardGateFailures": 1,
+        "layer3Mean": 0
+      },
+      "past_time": {
+        "cases": 1,
+        "hardGateFailures": 0,
+        "layer3Mean": 1
+      }
+    }
+  },
+  "failures": [
+    {
+      "id": "EV-17",
+      "category": "far_future",
+      "requirement_ids": [
+        "GR-004"
+      ],
+      "input": "Remind me in the year 2090 to renew passport",
+      "reference_now": "2026-11-05T10:00:00+05:30",
+      "expected": {
+        "intent": "clarify",
+        "title": "renew passport",
+        "title_keywords": [
+          "renew",
+          "passport"
+        ],
+        "datetime_must_be_null": true,
+        "question_required": true,
+        "must_equal": {
+          "needs_clarification": true
+        }
+      },
+      "output": {
+        "intent": "reject",
+        "title": null,
+        "datetime": null,
+        "snooze_minutes": null,
+        "needs_clarification": false,
+        "clarification_question": null,
+        "reason": "The requested time is beyond the maximum allowed limit of five years from the reference time."
+      },
+      "failedRequirements": [
+        "GR-004"
+      ],
+      "layer1Errors": [],
+      "layer2Failed": [
+        {
+          "check": "question_required",
+          "message": "a non-empty clarification_question is required"
+        },
+        {
+          "check": "must_equal.needs_clarification",
+          "message": "needs_clarification must equal true but was false"
+        }
+      ],
+      "layer3": {
+        "score": 0,
+        "skipped": true
+      },
+      "kind": "HARD_GATE_FAILURE"
+    }
+  ]
+}
