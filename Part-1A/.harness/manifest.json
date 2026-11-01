@@ -1,6 +1,6 @@
 {
-  "lockedAt": "2026-11-01T12:44:23.815Z",
-  "reason": "baseline before implement, added eslint configs",
+  "lockedAt": "2026-11-01T12:50:02.270Z",
+  "reason": "AC-030 precondition made portable (EACCES -> unreadable path) before implement",
   "files": {
     ".harness/gates/integrity.js": "f244cf1288a6a7d8a1beeba28b1a4ce63ef8c243b7173453d03b9f7b1e2d38db",
     ".harness/gates/lint.js": "2e5a7e1de667756178aa61af6f3a418e7c9fc192430bf4afb98005ebc609a518",
@@ -26,7 +26,7 @@
     "specs/001-smart-todo-cli/plan.md": "49e0e756528a6438dc323429e20a5d161c75019ac29d03905454559c1acca2ed",
     "specs/001-smart-todo-cli/quickstart.md": "3c43816c1210b3dee31c5c3cd6122066afb25b399b3404cdaf6bf88fe8fdff86",
     "specs/001-smart-todo-cli/research.md": "af653df9693cd4d5cfeadbdbfa1060d7c6e3426d09a5f97e7e3d6400b381722d",
-    "specs/001-smart-todo-cli/spec.md": "48968fe9e461e7d5df68edb7c94ef651dac135ed12d71af5edea86a905be9432",
+    "specs/001-smart-todo-cli/spec.md": "963f0da0f507739fa9dc64cb3d326e29f18782c7e724637eb13ca2fefe021bcd",
     "specs/001-smart-todo-cli/tasks.md": "540b4a2e45b02cdb9e4eff5f24792dd2131dd83286f736680ebceaf7431f6d91",
     "tests/cli.test.js": "a7ddbb5cbe2d7d369c1c4b6833550205a576a198ca8b1bfd3e4d03b488722ea2"
   }

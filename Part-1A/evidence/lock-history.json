@@ -45,5 +45,16 @@
     ],
     "removed": [],
     "changed": []
+  },
+  {
+    "lockedAt": "2026-11-01T12:50:02.270Z",
+    "reason": "AC-030 precondition made portable (EACCES -> unreadable path) before implement",
+    "gitCommit": "e35cd4c",
+    "fileCount": 27,
+    "added": [],
+    "removed": [],
+    "changed": [
+      "specs/001-smart-todo-cli/spec.md"
+    ]
   }
 ]

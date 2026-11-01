@@ -318,10 +318,11 @@ The following exact task fixtures are used where referenced:
   the user lists tasks, **Then** the exit code is `2`, stdout is empty, stderr
   is exactly `error: storage error\n`, and the file still contains exactly
   `{broken`.
-- **AC-030**: **Given** a storage path whose read operation fails with
-  `EACCES`, **When** the user lists tasks, **Then** the exit code is `2`,
-  stdout is empty, stderr is exactly `error: storage error\n`, and no write
-  operation changes the file.
+- **AC-030**: **Given** the storage path exists but cannot be read (any read
+  error other than the file not existing, for example the path is a
+  directory), **When** the user lists tasks, **Then** the exit code is `2`,
+  stdout is empty, stderr is exactly `error: storage error\n`, and the storage
+  path remains untouched.
 - **AC-031**: **Given** a task file with tasks of priorities `high`, `medium`,
   and `low`, **When** the user lists with priority sorting, **Then** the
   returned priority sequence is exactly `["high","medium","low"]`.
@@ -476,6 +477,10 @@ The following exact task fixtures are used where referenced:
 
 ## Change History
 
+- **2026-11-01**: AC-030 precondition generalised: permission-based setup is
+  not portable to Windows. Accepting any read error other than a missing file
+  lets deterministic tests cover unreadable storage across platforms while
+  preserving the exact storage-error response and no-write guarantee.
 - **2026-11-01**: Clarified ID generation: any nonempty generated string is
   accepted if unique among stored tasks; collisions fail with exit code 1 and
   leave storage unchanged.
