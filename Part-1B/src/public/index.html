@@ -3,62 +3,124 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10172a">
   <title>Reminder Agent</title>
   <style>
     :root {
       color-scheme: light;
-      font-family: system-ui, sans-serif;
-      color: #172033;
-      background: #f3f6fb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #17233c;
+      background: #f5f7fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      --ink: #17233c;
+      --muted: #64728a;
+      --line: #e4e9f2;
+      --accent: #6d5dfc;
+      --accent-dark: #5546df;
     }
-    body { margin: 0; }
-    main { max-width: 980px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-    h1, h2 { line-height: 1.2; }
-    .panel { background: white; border: 1px solid #d8dfeb; border-radius: 12px; padding: 1.2rem; margin: 1rem 0; }
-    .form-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
-    label { display: block; font-weight: 650; margin-bottom: .35rem; }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; background: radial-gradient(ellipse at 50% -20%, #e7eaff 0, transparent 55%), #f5f7fb; }
+    main { width: min(100% - 2rem, 1020px); margin: 0 auto; padding: 2rem 0 4rem; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: .65rem; font-size: clamp(2.2rem, 6vw, 3.8rem); letter-spacing: -.055em; line-height: 1.04; color: #fff; }
+    h2 { margin-bottom: 1.15rem; font-size: 1.25rem; letter-spacing: -.025em; }
+    h3 { margin: 1.7rem 0 .8rem; font-size: .92rem; letter-spacing: .01em; }
+    .hero { position: relative; overflow: hidden; padding: clamp(1.6rem, 5vw, 3rem); color: #e8ebff; background: linear-gradient(125deg, #121a31 0%, #23285a 58%, #5144ab 100%); border-radius: 24px; box-shadow: 0 22px 55px #2631692b; }
+    .hero::after { position: absolute; top: -105px; right: -72px; width: 300px; height: 300px; border: 1px solid #ffffff24; border-radius: 50%; box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff06; content: ""; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem; color: #c9caff; font-size: .76rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: #80e2bc; box-shadow: 0 0 0 4px #80e2bc24; }
+    .hero p { max-width: 560px; margin-bottom: 0; color: #c7cce1; font-size: 1.02rem; line-height: 1.65; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.6rem; }
+    .hero-tag { padding: .38rem .72rem; color: #e5e6ff; border: 1px solid #ffffff27; border-radius: 999px; background: #ffffff0d; font-size: .8rem; }
+    .panel { margin: 1.15rem 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: #fff; border: 1px solid #e6eaf2; border-radius: 18px; box-shadow: 0 8px 26px #1a2b4a0a; }
+    .section-heading { display: flex; align-items: flex-start; gap: .9rem; }
+    .section-icon { display: grid; flex: 0 0 40px; width: 40px; height: 40px; place-items: center; color: #5c50e9; background: #f0efff; border-radius: 12px; font-size: 1.1rem; }
+    .section-heading h2 { margin: .1rem 0 .25rem; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .form-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(220px, .8fr); gap: 1rem; margin-top: 1.15rem; }
+    label { display: block; margin-bottom: .45rem; color: #34425a; font-size: .88rem; font-weight: 700; }
     input, textarea, button { font: inherit; }
-    input, textarea { box-sizing: border-box; width: 100%; padding: .7rem; border: 1px solid #aeb9ca; border-radius: 7px; }
-    textarea { min-height: 7rem; resize: vertical; }
-    button { border: 0; border-radius: 7px; padding: .65rem .9rem; color: white; background: #174ea6; cursor: pointer; }
-    button:hover { background: #103c82; }
-    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #ffbf47; outline-offset: 2px; }
-    button:disabled { opacity: .6; cursor: wait; }
-    .examples { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 1rem; }
-    .examples button { color: #174ea6; background: #e7efff; }
-    .examples button:hover { background: #d3e2ff; }
-    .status { min-height: 1.5rem; font-weight: 600; }
-    .intent, .check { display: inline-block; border-radius: 999px; padding: .2rem .65rem; font-weight: 700; }
-    .intent-create { color: #075b32; background: #d8f5e5; }
-    .intent-reschedule { color: #164b91; background: #dceaff; }
-    .intent-snooze { color: #704500; background: #fff0c2; }
-    .intent-clarify { color: #714000; background: #ffe4c2; }
-    .intent-reject { color: #8d1b25; background: #ffe0e2; }
-    .check-pass { color: #075b32; background: #d8f5e5; }
-    .check-fail { color: #8d1b25; background: #ffe0e2; }
-    .check-list { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
-    .check-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; padding: .65rem .75rem; border: 1px solid #d8dfeb; border-radius: 8px; }
-    .check { display: inline-block; border-radius: 999px; padding: .2rem .65rem; font-size: .82rem; font-weight: 750; white-space: nowrap; }
-    .check-name { flex: 1 1 200px; line-height: 1.45; overflow-wrap: anywhere; }
-    .metadata-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; margin: 0; }
-    .metadata-item { margin: 0; padding: .75rem; background: #f5f7fb; border-radius: 8px; min-width: 0; }
-    .metadata-item dt { color: #536176; font-size: .85rem; font-weight: 650; }
-    .metadata-item dd { margin: .25rem 0 0; font-weight: 700; overflow-wrap: anywhere; }
-    .field { margin: .85rem 0; }
-    .field strong { display: block; }
-    pre { overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: #f5f7fb; padding: 1rem; border-radius: 7px; }
-    ol { padding-left: 1.4rem; }
-    li { margin: .4rem 0; overflow-wrap: anywhere; }
-    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+    input, textarea { width: 100%; padding: .82rem .95rem; color: var(--ink); border: 1px solid #dce2ed; border-radius: 11px; background: #fbfcfe; transition: border-color .16s ease, box-shadow .16s ease, background .16s ease; }
+    input:hover, textarea:hover { border-color: #bac4d5; }
+    input:focus, textarea:focus { border-color: #8b80ff; background: white; box-shadow: 0 0 0 4px #796aff1c; outline: none; }
+    textarea { min-height: 112px; resize: vertical; line-height: 1.55; }
+    button { border: 0; border-radius: 10px; padding: .7rem 1rem; color: white; background: var(--accent); cursor: pointer; font-weight: 700; transition: transform .16s ease, background .16s ease, box-shadow .16s ease; }
+    button:hover { background: var(--accent-dark); box-shadow: 0 5px 14px #6254ed36; transform: translateY(-1px); }
+    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #e8a43a; outline-offset: 3px; }
+    button:disabled { opacity: .65; cursor: wait; transform: none; }
+    .examples { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 1.15rem; }
+    .examples button { padding: .48rem .75rem; color: #5146ce; border: 1px solid #e6e3ff; border-radius: 999px; background: #f7f6ff; font-size: .82rem; }
+    .examples button:hover { color: #fff; border-color: var(--accent); background: var(--accent); }
+    .help { margin: .45rem 0 0; color: var(--muted); font-size: .8rem; }
+    .primary-action { display: inline-flex; align-items: center; gap: .55rem; min-width: 142px; justify-content: center; padding: .82rem 1.2rem; box-shadow: 0 5px 13px #6254ed24; }
+    .primary-action::after { content: "→"; font-size: 1.12rem; transition: transform .16s ease; }
+    .primary-action:hover::after { transform: translateX(3px); }
+    .status { min-height: 1.45rem; margin: .8rem 0 0; color: #57657a; font-size: .9rem; font-weight: 600; }
+    .result-topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: 1.2rem; }
+    .result-topline h2 { margin: 0; }
+    .intent { display: inline-flex; align-items: center; gap: .4rem; border-radius: 999px; padding: .42rem .85rem; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .intent::before { width: 7px; height: 7px; border-radius: 50%; background: currentColor; content: ""; }
+    .intent-create { color: #087c51; background: #e2f8ee; }
+    .intent-reschedule { color: #2857b7; background: #e8efff; }
+    .intent-snooze { color: #966200; background: #fff4d8; }
+    .intent-clarify { color: #a44f08; background: #fff0df; }
+    .intent-reject { color: #b52e42; background: #ffeaed; }
+    .result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+    .field { min-width: 0; margin: 0; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: #fcfdff; }
+    .field strong { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .76rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .field span, .field code { overflow-wrap: anywhere; }
+    .field-highlight { border-color: #e4e0ff; background: linear-gradient(135deg, #f8f7ff, #fff); }
+    .field-highlight #datetime-human { color: #473bb8; font-size: 1.05rem; font-weight: 750; }
+    .field-full { grid-column: 1 / -1; }
+    .check-list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+    .check-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; padding: .68rem .8rem; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .check-row code { color: #61708a; font-size: .78rem; }
+    .check { display: inline-flex; align-items: center; border-radius: 999px; padding: .22rem .58rem; font-size: .72rem; font-weight: 800; letter-spacing: .05em; }
+    .check-pass { color: #087c51; background: #e2f8ee; }
+    .check-fail { color: #b52e42; background: #ffeaed; }
+    .check-name { flex: 1 1 200px; color: #37445a; line-height: 1.45; overflow-wrap: anywhere; }
+    .metadata-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .7rem; margin: 0; }
+    .metadata-item { min-width: 0; margin: 0; padding: .9rem; border: 1px solid var(--line); border-radius: 11px; background: #f8f9fd; }
+    .metadata-item dt { color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .metadata-item dd { margin: .32rem 0 0; color: var(--ink); font-size: .95rem; font-weight: 750; overflow-wrap: anywhere; }
+    .raw-json { overflow: auto; margin: 0; padding: 1.1rem; color: #e2e8ff; border: 1px solid #303a58; border-radius: 12px; background: #151d33; font-size: .85rem; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .check-list + h3 { margin-top: 1.6rem; }
+    .history-list { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+    .history-list li { margin: 0; padding: .75rem .85rem; color: #46536a; border: 1px solid var(--line); border-radius: 10px; background: #fcfdff; font-size: .88rem; overflow-wrap: anywhere; }
+    [hidden] { display: none !important; }
+    @media (max-width: 640px) {
+      main { width: min(100% - 1rem, 1020px); padding-top: .5rem; }
+      .hero { border-radius: 18px; }
+      .form-grid, .result-grid { grid-template-columns: 1fr; }
+      .field-full { grid-column: auto; }
+      .panel { border-radius: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
   <main>
-    <h1>Reminder Agent</h1>
-    <p>Turn a reminder request into a structured result. Reference time and timezone are sent with every request.</p>
+    <header class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Natural-language reminders</div>
+        <h1>Make time for<br>what matters.</h1>
+        <p>Turn a simple request into a clear reminder. Create, reschedule, snooze, or get a helpful clarification when details are missing.</p>
+        <div class="hero-tags" aria-label="Supported actions">
+          <span class="hero-tag">Create</span><span class="hero-tag">Reschedule</span>
+          <span class="hero-tag">Snooze</span><span class="hero-tag">Clarify</span>
+        </div>
+      </div>
+    </header>
 
     <section class="panel" aria-labelledby="request-heading">
-      <h2 id="request-heading">Request</h2>
+      <div class="section-heading">
+        <span class="section-icon" aria-hidden="true">✦</span>
+        <div><h2 id="request-heading">What should we remind you?</h2><p>Write naturally. The agent will interpret the date and time.</p></div>
+      </div>
       <div class="examples" aria-label="Example requests">
         <button type="button" data-example="Remind me to call mom tomorrow at 6pm">Create</button>
         <button type="button" data-example="Move my dentist reminder to Friday 4pm">Reschedule</button>
@@ -68,40 +130,46 @@
       </div>
       <label for="request-text">Reminder request</label>
       <textarea id="request-text" maxlength="8000" aria-describedby="request-help"></textarea>
-      <p id="request-help">Up to 8,000 Unicode code points.</p>
+      <p id="request-help" class="help">Up to 8,000 characters · Your request stays in this session.</p>
       <div class="form-grid">
         <div>
           <label for="reference-time">Reference time</label>
           <input id="reference-time" type="text" autocomplete="off">
+          <p class="help">Used to interpret relative dates.</p>
         </div>
         <div>
-          <label for="timezone">Timezone (IANA)</label>
+          <label for="timezone">Timezone</label>
           <input id="timezone" type="text" value="Asia/Kolkata" autocomplete="off">
+          <p class="help">Enter an IANA timezone, e.g. Asia/Kolkata.</p>
         </div>
       </div>
-      <p><button id="parse-button" type="button">Parse</button></p>
+      <p><button id="parse-button" class="primary-action" type="button">Parse reminder</button></p>
       <p id="status" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section id="result-panel" class="panel" aria-labelledby="result-heading" hidden>
-      <h2 id="result-heading">Result</h2>
-      <p id="intent-view"></p>
-      <div class="field"><strong>Title</strong><span id="title-view"></span></div>
-      <div class="field"><strong>Date and time</strong><span id="datetime-human"></span><br><code id="datetime-raw"></code></div>
-      <div class="field"><strong>Snooze minutes</strong><span id="snooze-view"></span></div>
-      <div class="field"><strong>Clarification question</strong><span id="question-view"></span></div>
-      <div class="field"><strong>Reason</strong><span id="reason-view"></span></div>
+      <div class="result-topline"><h2 id="result-heading">Your reminder</h2><p id="intent-view"></p></div>
+      <div class="result-grid">
+        <div class="field"><strong>Reminder</strong><span id="title-view"></span></div>
+        <div class="field field-highlight"><strong>Date &amp; time</strong><span id="datetime-human"></span><br><code id="datetime-raw"></code></div>
+        <div class="field"><strong>Snooze duration</strong><span id="snooze-view"></span></div>
+        <div class="field"><strong>Question</strong><span id="question-view"></span></div>
+        <div class="field field-full"><strong>Why this result?</strong><span id="reason-view"></span></div>
+      </div>
       <h3>Validation checks</h3>
       <ul id="checks-view" class="check-list" aria-label="Validation check results"></ul>
       <h3>Request metadata</h3>
       <dl id="metadata-view" class="metadata-grid"></dl>
       <h3>Raw JSON</h3>
-      <pre id="raw-json"></pre>
+      <pre id="raw-json" class="raw-json"></pre>
     </section>
 
     <section class="panel" aria-labelledby="history-heading">
-      <h2 id="history-heading">Recent requests (this page only)</h2>
-      <ol id="history-list"></ol>
+      <div class="section-heading">
+        <span class="section-icon" aria-hidden="true">◷</span>
+        <div><h2 id="history-heading">Recent requests</h2><p>Only kept in memory while this page is open.</p></div>
+      </div>
+      <ol id="history-list" class="history-list"></ol>
     </section>
   </main>
 
