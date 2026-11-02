@@ -477,6 +477,274 @@
       .hero-tags { gap: .45rem; }
       .primary-action { width: 100%; }
     }
+
+    body {
+      background:
+        radial-gradient(ellipse at 8% 2%, rgba(122, 108, 255, .2), transparent 34%),
+        radial-gradient(ellipse at 92% 18%, rgba(123, 231, 212, .12), transparent 30%),
+        linear-gradient(145deg, #080b17 0%, #11172c 52%, #182443 100%);
+      background-attachment: fixed;
+    }
+    main { width: min(100% - 3rem, 1160px); padding-top: 2.5rem; }
+    .hero {
+      min-height: 310px;
+      display: flex;
+      align-items: center;
+      border-color: rgba(195, 207, 255, .18);
+      background:
+        radial-gradient(ellipse at 84% 78%, rgba(123, 231, 212, .14), transparent 34%),
+        linear-gradient(120deg, rgba(12, 17, 30, .97), rgba(27, 31, 57, .95) 55%, rgba(57, 41, 111, .88));
+    }
+    .hero-content { max-width: 720px; }
+    .hero::before {
+      right: -25px;
+      top: -105px;
+      border-color: rgba(203, 193, 255, .18);
+      box-shadow: 0 0 0 48px rgba(255,255,255,.035), 0 0 0 96px rgba(255,255,255,.018);
+    }
+    .hero::after {
+      left: auto;
+      right: 4%;
+      bottom: -155px;
+      width: 360px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(180, 155, 255, .2), transparent 68%);
+    }
+    .hero h1 { max-width: 640px; }
+    .hero-tag {
+      padding: .55rem .9rem;
+      border-color: rgba(215, 222, 255, .17);
+      background: rgba(255,255,255,.055);
+    }
+    .panel {
+      border-color: rgba(195, 207, 255, .15);
+      background: linear-gradient(145deg, rgba(20, 27, 46, .88), rgba(11, 16, 30, .9));
+      box-shadow: 0 22px 54px rgba(2, 6, 20, .32);
+    }
+    .section-icon {
+      border-radius: 13px;
+      background: linear-gradient(135deg, rgba(180, 155, 255, .22), rgba(126, 240, 190, .12));
+      box-shadow: 0 8px 24px rgba(122, 108, 255, .12);
+    }
+    input, textarea {
+      border-color: rgba(195, 207, 255, .17);
+      background: rgba(7, 12, 24, .48);
+    }
+    input:focus, textarea:focus {
+      border-color: rgba(180, 155, 255, .8);
+      box-shadow: 0 0 0 4px rgba(122, 108, 255, .16);
+    }
+    .examples button {
+      padding: .55rem .92rem;
+      border-color: rgba(180, 155, 255, .22);
+      background: rgba(255,255,255,.035);
+    }
+    .examples button:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 3px;
+    }
+    .primary-action {
+      min-height: 50px;
+      background: linear-gradient(110deg, #8cf7c4, #91e8ee 58%, #b8a3ff);
+      box-shadow: 0 14px 32px rgba(111, 209, 195, .2);
+    }
+    .primary-action:hover { box-shadow: 0 18px 38px rgba(111, 209, 195, .28); }
+    .status { min-height: 1.5rem; }
+    .field, .check-row, .metadata-item {
+      border-color: rgba(195, 207, 255, .14);
+      background: rgba(7, 12, 24, .4);
+    }
+    .field-highlight {
+      border-color: rgba(180, 155, 255, .3);
+      background: linear-gradient(135deg, rgba(122, 108, 255, .13), rgba(126, 240, 190, .05));
+    }
+    .raw-json {
+      border-color: rgba(195, 207, 255, .15);
+      background: rgba(5, 9, 18, .8);
+    }
+    .history-list li {
+      padding: .65rem .75rem;
+      border: 1px solid rgba(195, 207, 255, .1);
+      border-radius: 11px;
+      background: rgba(7, 12, 24, .28);
+      overflow-wrap: anywhere;
+    }
+    button, input, textarea { transition: border-color .18s ease, box-shadow .18s ease, background .18s ease, transform .18s ease; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid #a8f4dc;
+      outline-offset: 3px;
+    }
+    @media (max-width: 720px) {
+      main { width: min(100% - 1.25rem, 1080px); padding-top: 1rem; }
+      .hero { min-height: 0; }
+      .hero::before { right: -150px; opacity: .65; }
+      .hero::after { right: -100px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+    :root {
+      color-scheme: light;
+      --text: #342d4b;
+      --muted: #77718b;
+      --muted-strong: #554d6e;
+      --line: rgba(99, 77, 130, .14);
+      --shadow: 0 20px 55px rgba(112, 78, 126, .12);
+      --primary: #ff8e78;
+      --primary-strong: #f37472;
+    }
+    body {
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 7%, rgba(255, 213, 122, .52), transparent 22rem),
+        radial-gradient(circle at 92% 18%, rgba(255, 177, 195, .42), transparent 25rem),
+        radial-gradient(circle at 76% 88%, rgba(173, 228, 213, .42), transparent 25rem),
+        #fffaf1;
+    }
+    main { max-width: 1000px; }
+    .hero {
+      min-height: 360px;
+      border: 0;
+      border-radius: 34px;
+      color: #41354f;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, .75) 0 3px, transparent 4px),
+        radial-gradient(circle at 82% 32%, rgba(255, 255, 255, .65) 0 5px, transparent 6px),
+        radial-gradient(circle at 92% 48%, rgba(255, 255, 255, .6) 0 3px, transparent 4px),
+        linear-gradient(118deg, #ffe49a 0%, #ffc7a6 48%, #f6c1dc 100%);
+      box-shadow: 0 24px 60px rgba(230, 151, 129, .22);
+    }
+    .hero::before {
+      top: 28px;
+      right: 52px;
+      width: 184px;
+      height: 184px;
+      border: 0;
+      background: rgba(255, 250, 241, .48);
+      box-shadow: 0 0 0 22px rgba(255, 250, 241, .2), 0 0 0 48px rgba(255, 250, 241, .13);
+    }
+    .hero::after {
+      right: 5%;
+      bottom: -156px;
+      width: 330px;
+      height: 270px;
+      background: radial-gradient(circle, rgba(255, 250, 241, .64), transparent 68%);
+    }
+    .hero-content { max-width: 670px; }
+    .eyebrow { color: #725b65; }
+    .eyebrow-dot {
+      background: #fa806e;
+      box-shadow: 0 0 0 5px rgba(250, 128, 110, .18);
+    }
+    .hero h1 { color: #392f49; }
+    .hero p { color: #655568; }
+    .hero-tag {
+      border-color: rgba(255, 255, 255, .66);
+      background: rgba(255, 255, 255, .48);
+      color: #55445d;
+      font-weight: 700;
+    }
+    .panel {
+      border: 1px solid rgba(126, 91, 132, .12);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 16px 42px rgba(112, 78, 126, .09);
+      backdrop-filter: blur(14px);
+    }
+    .section-heading h2 { color: #403650; }
+    .section-heading p, .help { color: #81788e; }
+    .section-icon {
+      border: 0;
+      border-radius: 15px;
+      color: #6f5780;
+      background: linear-gradient(145deg, #fff0b8, #ffd8cb);
+      box-shadow: 0 8px 18px rgba(225, 160, 127, .18);
+    }
+    label { color: #554a68; }
+    input, textarea {
+      color: #3e3651;
+      border-color: #e8dfeb;
+      border-radius: 15px;
+      background: #fffdfb;
+    }
+    input::placeholder, textarea::placeholder { color: #aaa1b1; }
+    input:hover, textarea:hover { border-color: #efb3a5; }
+    input:focus, textarea:focus {
+      border-color: #f28c7c;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(242, 140, 124, .16);
+    }
+    .examples button {
+      border-color: #eadff0;
+      background: #fff;
+      color: #685579;
+      box-shadow: 0 3px 9px rgba(112, 78, 126, .05);
+    }
+    .examples button:hover {
+      border-color: #f2ad9e;
+      background: #fff3e9;
+      transform: translateY(-2px) rotate(-1deg);
+    }
+    button {
+      color: #fff;
+      background: linear-gradient(135deg, #ff927d, #ef7183);
+      box-shadow: 0 9px 20px rgba(235, 119, 124, .22);
+    }
+    button:hover { box-shadow: 0 13px 25px rgba(235, 119, 124, .3); }
+    button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline-color: #7962a0;
+    }
+    .primary-action {
+      min-height: 54px;
+      border-radius: 16px;
+      color: #fff;
+      background: linear-gradient(110deg, #ff927d, #f07988 62%, #bb8bc5);
+      box-shadow: 0 12px 24px rgba(235, 119, 124, .24);
+    }
+    .primary-action:hover { box-shadow: 0 16px 28px rgba(235, 119, 124, .32); }
+    .status { color: #635675; }
+    .result-topline h2 { color: #443750; }
+    .field, .check-row, .metadata-item {
+      border-color: #eee5ef;
+      border-radius: 16px;
+      background: #fffdfb;
+    }
+    .field strong, .metadata-item dt { color: #877a91; }
+    .field span, .metadata-item dd { color: #433950; }
+    .field-highlight {
+      border-color: #e5d6ef;
+      background: linear-gradient(135deg, #f9f0ff, #fff4e8);
+    }
+    .field-highlight #datetime-human { color: #634b79; }
+    .check-row code { color: #6d6279; }
+    .check-name { color: #51475f; }
+    .check-pass { color: #245c4a; background: #bcebd4; }
+    .check-fail { color: #8d3f52; background: #ffe0e4; }
+    .raw-json {
+      border-color: #e9e0eb;
+      border-radius: 16px;
+      background: #fbf8fc;
+      color: #51445d;
+    }
+    .history-list { color: #554a68; }
+    .history-list li {
+      border-color: #f0e5eb;
+      border-radius: 14px;
+      background: rgba(255, 250, 246, .8);
+      color: #7d7188;
+    }
+    .intent-create { color: #317b5c; background: #e0f6e8; }
+    .intent-reschedule { color: #596da4; background: #e8edff; }
+    .intent-snooze { color: #987223; background: #fff3ce; }
+    .intent-clarify { color: #a45b40; background: #ffede0; }
+    .intent-reject { color: #a44960; background: #ffe8ed; }
+    @media (max-width: 720px) {
+      .hero { min-height: 310px; }
+      .hero::before { right: -90px; top: -72px; }
+    }
     </style>
 </head>
 <body>
@@ -495,7 +763,7 @@
 
     <section class="panel" aria-labelledby="request-heading">
       <div class="section-heading">
-        <span class="section-icon" aria-hidden="true">âœ¦</span>
+        <span class="section-icon" aria-hidden="true">&#10022;</span>
         <div><h2 id="request-heading">What should we remind you?</h2><p>Write naturally. The agent will interpret the date and time.</p></div>
       </div>
       <div class="examples" aria-label="Example requests">
@@ -507,7 +775,7 @@
       </div>
       <label for="request-text">Reminder request</label>
       <textarea id="request-text" maxlength="8000" aria-describedby="request-help"></textarea>
-      <p id="request-help" class="help">Up to 8,000 characters Â· Your request stays in this session.</p>
+      <p id="request-help" class="help">Up to 8,000 characters &middot; Your request stays in this session.</p>
       <div class="form-grid">
         <div>
           <label for="reference-time">Reference time</label>
@@ -543,7 +811,7 @@
 
     <section class="panel" aria-labelledby="history-heading">
       <div class="section-heading">
-        <span class="section-icon" aria-hidden="true">â—·</span>
+        <span class="section-icon" aria-hidden="true">&#8635;</span>
         <div><h2 id="history-heading">Recent requests</h2><p>Only kept in memory while this page is open.</p></div>
       </div>
       <ol id="history-list" class="history-list"></ol>
@@ -587,7 +855,7 @@
       historyList.replaceChildren();
       for (const entry of history) {
         const item = document.createElement('li');
-        item.textContent = `${entry.when} â€” ${entry.text} â€” ${entry.outcome}`;
+        item.textContent = `${entry.when} \u2014 ${entry.text} \u2014 ${entry.outcome}`;
         historyList.appendChild(item);
       }
     }
@@ -636,14 +904,14 @@
       const intent = document.getElementById('intent-view');
       intent.replaceChildren();
       appendText(intent, 'span', result.intent, `intent intent-${result.intent}`);
-      document.getElementById('title-view').textContent = result.title === null ? 'â€”' : result.title;
+      document.getElementById('title-view').textContent = result.title === null ? '\u2014' : result.title;
       document.getElementById('snooze-view').textContent =
-        result.snooze_minutes === null ? 'â€”' : String(result.snooze_minutes);
+        result.snooze_minutes === null ? '\u2014' : String(result.snooze_minutes);
       document.getElementById('question-view').textContent =
-        result.clarification_question === null ? 'â€”' : result.clarification_question;
+        result.clarification_question === null ? '\u2014' : result.clarification_question;
       document.getElementById('reason-view').textContent = result.reason;
-      document.getElementById('datetime-raw').textContent = result.datetime === null ? 'â€”' : result.datetime;
-      let humanDate = 'â€”';
+      document.getElementById('datetime-raw').textContent = result.datetime === null ? '\u2014' : result.datetime;
+      let humanDate = '\u2014';
       if (result.datetime !== null) {
         try {
           humanDate = new Intl.DateTimeFormat(undefined, {
@@ -674,7 +942,7 @@
       const timezone = timezoneInput.value.trim();
       const body = { text, nowIso: nowInput.value.trim(), timezone };
       parseButton.disabled = true;
-      statusView.textContent = 'Parsing requestâ€¦';
+      statusView.textContent = 'Parsing request...';
       resultPanel.hidden = true;
       try {
         const response = await fetch('/api/parse', {
@@ -710,4 +978,3 @@
   </script>
 </body>
 </html>
-
