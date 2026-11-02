@@ -47,7 +47,7 @@ function Page({ board }) {
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
       <Header />
-      <Welcome />
+      <Welcome board={board} />
       <Workspace board={board} />
       <footer><span>Small steps count.</span><span>Made for a calmer kind of productive.</span></footer>
     </main>
@@ -65,7 +65,12 @@ function Header() {
   );
 }
 
-function Welcome() {
+function Welcome({ board }) {
+  const counts = board.tasks.reduce((totals, task) => {
+    totals[task.status] += 1;
+    return totals;
+  }, { todo: 0, in_progress: 0, done: 0 });
+
   return (
     <section className="welcome">
       <div className="welcome-copy">
@@ -73,16 +78,16 @@ function Welcome() {
         <h1>Make room for<br /><em>what matters.</em></h1>
         <p className="intro">A little structure goes a long way. Pick a task and get moving.</p>
         <div className="welcome-stats" aria-label="Daily focus stats">
-          <span>6 wins</span>
-          <span>3 deep work blocks</span>
-          <span>1 calm reset</span>
+          <span><strong>{counts.todo}</strong> to do</span>
+          <span><strong>{counts.in_progress}</strong> in progress</span>
+          <span><strong>{counts.done}</strong> completed</span>
         </div>
       </div>
       <div className="welcome-art" aria-hidden="true">
         <div className="mood-card">
           <span className="mini-label">FLOW</span>
-          <strong>3 tasks</strong>
-          <small>ready to win</small>
+          <strong>{board.tasks.length} tasks</strong>
+          <small>in your current view</small>
         </div>
         <span className="sun" />
         <span className="orbit orbit-one" />
