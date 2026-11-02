@@ -44,6 +44,8 @@ function useBoard() {
 function Page({ board }) {
   return (
     <main className="app-shell">
+      <div className="ambient ambient-one" aria-hidden="true" />
+      <div className="ambient ambient-two" aria-hidden="true" />
       <Header />
       <Welcome />
       <Workspace board={board} />
@@ -56,9 +58,9 @@ function Header() {
   return (
     <header className="topbar">
       <a className="brand" href="/" aria-label="Daymark home">
-        <span className="brand-mark">D</span><span>daymark</span>
+        <span className="brand-mark">✦</span><span>daymark</span>
       </a>
-      <span className="local-badge"><span /> Your private workspace</span>
+      <span className="local-badge"><span /> Flow mode active</span>
     </header>
   );
 }
@@ -66,14 +68,27 @@ function Header() {
 function Welcome() {
   return (
     <section className="welcome">
-      <div>
+      <div className="welcome-copy">
         <p className="eyebrow">YOUR DAY, IN FOCUS</p>
         <h1>Make room for<br /><em>what matters.</em></h1>
         <p className="intro">A little structure goes a long way. Pick a task and get moving.</p>
+        <div className="welcome-stats" aria-label="Daily focus stats">
+          <span>6 wins</span>
+          <span>3 deep work blocks</span>
+          <span>1 calm reset</span>
+        </div>
       </div>
       <div className="welcome-art" aria-hidden="true">
-        <span className="sun" /><span className="orbit orbit-one" /><span className="orbit orbit-two" />
-        <span className="art-leaf leaf-one" /><span className="art-leaf leaf-two" />
+        <div className="mood-card">
+          <span className="mini-label">FLOW</span>
+          <strong>3 tasks</strong>
+          <small>ready to win</small>
+        </div>
+        <span className="sun" />
+        <span className="orbit orbit-one" />
+        <span className="orbit orbit-two" />
+        <span className="art-leaf leaf-one" />
+        <span className="art-leaf leaf-two" />
       </div>
     </section>
   );
@@ -175,12 +190,12 @@ function TaskTitle({ task }) {
 function TaskActions({ task, board }) {
   return (
     <div className="task-actions">
-      {task.status === 'todo' ? <button type="button" onClick={() => board.status(task, 'in_progress')}>Start task</button> : null}
-      {task.status === 'in_progress' ? <button type="button" onClick={() => board.status(task, 'done')}>Mark done</button> : null}
-      {task.status === 'in_progress' ? <button type="button" onClick={() => board.status(task, 'todo')}>Move to to-do</button> : null}
-      {task.status === 'done' ? <button type="button" onClick={() => board.reopen(task)}>Reopen task</button> : null}
-      <button type="button" aria-label={`Edit ${task.title}`} onClick={() => board.edit(task)}>Edit</button>
-      <button type="button" aria-label={`Delete ${task.title}`} onClick={() => board.remove(task)}>Delete</button>
+      {task.status === 'todo' ? <button className="task-button" type="button" onClick={() => board.status(task, 'in_progress')}>Start task</button> : null}
+      {task.status === 'in_progress' ? <button className="task-button" type="button" onClick={() => board.status(task, 'done')}>Mark done</button> : null}
+      {task.status === 'in_progress' ? <button className="task-button" type="button" onClick={() => board.status(task, 'todo')}>Move to to-do</button> : null}
+      {task.status === 'done' ? <button className="task-button" type="button" onClick={() => board.reopen(task)}>Reopen task</button> : null}
+      <button className="task-button" type="button" aria-label={`Edit ${task.title}`} onClick={() => board.edit(task)}>Edit</button>
+      <button className="task-button" type="button" aria-label={`Delete ${task.title}`} onClick={() => board.remove(task)}>Delete</button>
     </div>
   );
 }

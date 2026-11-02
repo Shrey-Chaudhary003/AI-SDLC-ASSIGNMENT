@@ -22,4 +22,4 @@
 - Repair report: [eval-results-repair1.json](./eval-results-repair1.json)
 - Harness attempt ledger: [attempt-log.json](./attempt-log.json)
 
-The repair changed only `prompts/system-prompt.md`. No evaluation input, expected result, schema, evaluator, or threshold was modified.
+
